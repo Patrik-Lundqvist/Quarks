@@ -167,3 +167,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainMenuSkin: {fileID: 11400000, guid: 9175df49ac0d12f4f8eaee3231188a9c, type: 2}
+  hSliderValue: 0

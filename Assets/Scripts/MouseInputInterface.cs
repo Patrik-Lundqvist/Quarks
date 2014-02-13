@@ -4,7 +4,7 @@ using System.Collections;
 public class MouseInputInterface : MonoBehaviour {
 
 	// The mouse sense
-	float mouseSpeed = 1f;
+	float mouseSpeed;
 
 	// Calculation variables
 	float current_x = 0.0f;
@@ -24,7 +24,7 @@ public class MouseInputInterface : MonoBehaviour {
 
 		// Calculate the screen width
 		screen_width = Camera.main.orthographicSize * Camera.main.aspect;
-
+		mouseSpeed = PlayerPrefs.GetFloat("mouseSense");
 	}
 		
 	// Update is called once per frame

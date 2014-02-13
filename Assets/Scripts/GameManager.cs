@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour {
 
 	void BeginNewGame()
 	{
+		Screen.showCursor = false;
+
 		gameObject.GetComponent<NetworkManager>().SpawnMainPlayerBall();
 
 		SpawnObstacleBall();

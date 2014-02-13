@@ -30,9 +30,6 @@ public class GUIManager : MonoBehaviour {
 		// Load skin
 		GUI.skin = GameUISkin;
 
-
-
-		// Set labels
 		//Current Time
 		GUI.Label(new Rect(10,10,100,45), gameManager.NumberOfObstacleBalls.ToString());
 
