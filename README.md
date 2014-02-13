@@ -1,4 +1,4 @@
 Quarks
 ======
 
-The awesome game Quarks
+The awesome unity game Quarks
