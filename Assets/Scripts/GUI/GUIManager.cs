@@ -45,7 +45,7 @@ public class GUIManager : MonoBehaviour {
 		if(GameManager.Instance.Running)
 		{
 			// Draw power box
-			GUI.BeginGroup(new Rect(68,26,650,50));
+			GUI.BeginGroup(new Rect(68,26,750,50));
 
 				// Power-label
 				GUI.Label(new Rect(0,0,50,45), "Power:", GameUISkin.GetStyle("UIBottomLabel"));
@@ -64,6 +64,8 @@ public class GUIManager : MonoBehaviour {
 					GUI.Box(new Rect(0, 0, size.x, size.y), emptyTex, progress_empty);
 				
 				GUI.EndGroup();
+
+			GUI.Label(new Rect(665,2,50,45), PlayerManager.Instance.powerCurrent.ToString("0.0") + "/" + PlayerManager.Instance.powerMax, GameUISkin.GetStyle("UIBottomLabelPower"));
 
 			GUI.EndGroup();
 		}

@@ -3,7 +3,7 @@ using System.Collections;
 
 public abstract class PlayerBall : Ball {
 
-	public bool powerReg;
+	public int powerReg;
 	public float powerRegRate = 2f;
 
 	// Use this for initialization
@@ -14,7 +14,7 @@ public abstract class PlayerBall : Ball {
 	// Use this for initialization
 	public override void Update () {
 
-		if(powerReg)
+		if(powerReg > 0)
 		{
 			PlayerManager.Instance.powerCurrent += powerRegRate * Time.deltaTime;
 		}
@@ -44,7 +44,7 @@ public abstract class PlayerBall : Ball {
 
 		if(hitobject == "ManaReg")
 		{
-			powerReg = true;
+			powerReg += 1;
 			other.gameObject.GetComponent<SpriteRenderer>().enabled = true;
 		}
 		
@@ -56,7 +56,7 @@ public abstract class PlayerBall : Ball {
 
 		if(hitobject == "ManaReg")
 		{
-			powerReg = false;
+			powerReg -= 1;
 			other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 		}
 	}
