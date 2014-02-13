@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 06a10f088b48e8d4fa7841c9dfb412d5
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - ballMaterial: {fileID: 2100000, guid: 23aded7961edfc947a9e32298c9a4424, type: 2}
+  - ballPhysMaterial: {fileID: 13400000, guid: 02b4714af920253468f837dbf29c210e, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
