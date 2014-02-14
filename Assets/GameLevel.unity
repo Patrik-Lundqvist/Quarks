@@ -177,6 +177,7 @@ GameObject:
   - 114: {fileID: 150063005}
   - 114: {fileID: 150063006}
   - 114: {fileID: 150063007}
+  - 114: {fileID: 150063008}
   m_Layer: 0
   m_Name: _SCRIPTS
   m_TagString: Untagged
@@ -382,7 +383,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerMax: 100
   powerCurrent: 0
+  playerBall: {fileID: 0}
   playerManager: {fileID: 0}
+--- !u!114 &150063008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 150063001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28974bccbd2d1ca4b8ba9a230dc434f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstSpell: {fileID: 0}
 --- !u!1 &277119392
 GameObject:
   m_ObjectHideFlags: 0

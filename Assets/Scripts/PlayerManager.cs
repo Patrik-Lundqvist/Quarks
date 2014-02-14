@@ -6,6 +6,8 @@ public class PlayerManager : MonoBehaviour {
 	public float powerMax = 100;
 	public float powerCurrent = 0;
 
+	public GameObject playerBall;
+
 	public PlayerManager playerManager;
 
 	public static PlayerManager Instance { get; private set; }
@@ -26,4 +28,10 @@ public class PlayerManager : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	public void SetPlayerBall(GameObject playerBall)
+	{
+		this.playerBall = playerBall;
+	}
+
 }

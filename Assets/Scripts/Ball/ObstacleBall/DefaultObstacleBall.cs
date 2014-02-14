@@ -6,7 +6,7 @@ public class DefaultObstacleBall : ObstacleBall {
 	// Use this for initialization
 	public override void Start () {
 		// Sets the ball speed
-		speed = 800;
+		speed = 400;
 
 		base.Start();
 	}

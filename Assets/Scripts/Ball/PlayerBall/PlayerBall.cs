@@ -4,7 +4,13 @@ using System.Collections;
 public abstract class PlayerBall : Ball {
 
 	public int powerReg;
-	public float powerRegRate = 2f;
+	private float powerRegRate = 2f;
+
+
+	void Awake()
+	{
+		PlayerManager.Instance.SetPlayerBall(this.gameObject);
+	}
 
 	// Use this for initialization
 	public override void Start () {
@@ -16,7 +22,8 @@ public abstract class PlayerBall : Ball {
 
 		if(powerReg > 0)
 		{
-			PlayerManager.Instance.powerCurrent += powerRegRate * Time.deltaTime;
+			if(PlayerManager.Instance.powerCurrent < 100)
+				PlayerManager.Instance.powerCurrent += powerRegRate * Time.deltaTime;
 		}
 
 

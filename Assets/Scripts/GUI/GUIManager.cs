@@ -62,7 +62,7 @@ public class GUIManager : MonoBehaviour {
 				
 				GUI.EndGroup();
 
-			GUI.Label(new Rect(665,2,50,45), PlayerManager.Instance.powerCurrent.ToString("0.0") + "/" + PlayerManager.Instance.powerMax, GameUISkin.GetStyle("UIBottomLabelPower"));
+			GUI.Label(new Rect(665,2,50,45), PlayerManager.Instance.powerCurrent.ToString("0") + "/" + PlayerManager.Instance.powerMax, GameUISkin.GetStyle("UIBottomLabelPower"));
 
 			GUI.EndGroup();
 		}
