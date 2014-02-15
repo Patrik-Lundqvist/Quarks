@@ -130,12 +130,8 @@ public abstract class Ball : MonoBehaviour {
 			// The offset
 			float audioClipOffset = 445.0f;
 
-
-
 			// Get the velocity and apply offset
 			float p = collision.relativeVelocity.magnitude / audioClipOffset;
-
-			Debug.Log(p);
 
 			// Play audio clip
 			new OTSound("BallHit").Pitch(Mathf.Clamp( p, 0.5f, 1.1f)).Volume(Mathf.Clamp( p, 0.2f, 1.5f));
