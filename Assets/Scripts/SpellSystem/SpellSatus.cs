@@ -1,8 +1,9 @@
-﻿public enum SpellStatus 
+﻿/// <summary>
+/// Spell status.
+/// </summary>
+public enum SpellStatus 
 { 
-	Casting, 
-	Cooldown,
-	Ready, 
+	Ready,
+	Casting,
 	Finished
-
 };

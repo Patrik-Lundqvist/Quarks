@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A generic timer class.
+/// </summary>
 public class Timer : MonoBehaviour {
 
+	// Stores the current time value
 	private float currentTime;
-	private bool _active = false;
+
+	// Is the timer active
+	private bool IsActive = false;
 
 	/// <summary>
-	/// Gets the current time.
+	/// Gets the current time of the timer.
 	/// </summary>
 	/// <value>The current time.</value>
 	public float CurrentTime
@@ -16,7 +22,7 @@ public class Timer : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Gets the current time stamp.
+	/// Gets the current time stamp in a string.
 	/// </summary>
 	/// <value>The current time stamp.</value>
 	public string CurrentTimeStamp
@@ -24,19 +30,28 @@ public class Timer : MonoBehaviour {
 		get { return string.Format("{0:0.0}", currentTime); }
 	}
 
-	// Use this for initialization
+	/// <summary>
+	/// Use this for initialization.
+	/// </summary>
 	void Start () 
 	{
 		currentTime = 0;
 	}
 	
-	// Update is called once per frame
+	/// <summary>
+	/// Update is called once per frame.
+	/// </summary>
 	void Update () 
 	{
-		if(_active)
+		if(IsActive)
 			currentTime += Time.deltaTime;
 	}
 
+	/// <summary>
+	/// Determines whether this instance has passed the specified time.
+	/// </summary>
+	/// <returns><c>true</c> if this instance has passed the specified time; otherwise, <c>false</c>.</returns>
+	/// <param name="time">Time.</param>
 	public bool HasPassed(float time)
 	{
 		if(currentTime > time)
@@ -47,19 +62,29 @@ public class Timer : MonoBehaviour {
 		return false;
 	}
 
+	/// <summary>
+	/// Reset the timer
+	/// </summary>
 	public void Reset()
 	{
+		IsActive = false;
 		currentTime = 0;
 	}
 
+	/// <summary>
+	/// Starts the timer.
+	/// </summary>
 	public void StartTimer()
 	{
-		_active = true;
+		IsActive = true;
 	}
 
+	/// <summary>
+	/// Stops the timer.
+	/// </summary>
 	public void StopTimer()
 	{
-		_active = false;
+		IsActive = false;
 	}
 
 }

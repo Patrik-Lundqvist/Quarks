@@ -1,17 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Default obstacle ball.
+/// </summary>
 public class DefaultObstacleBall : ObstacleBall {
 	
-	// Use this for initialization
+	/// <summary>
+	/// Use this for initialization.
+	/// </summary>
 	public override void Start () {
+
 		// Sets the ball speed
-		speed = 400;
+		speed = 15000;
 
 		base.Start();
 	}
 	
-	// Update is called once per frame
+	/// <summary>
+	/// Update is called once per frame.
+	/// </summary>
 	public override void Update () {
 		base.Update();
 	}

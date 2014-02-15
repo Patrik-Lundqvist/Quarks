@@ -1,37 +1,46 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public abstract class ObstacleBall : Ball {
 
-	/// <summary>
-	/// The applied speed for the ball
-	/// </summary>
+	// The applied speed for the ball
 	public int speed;
 
+	// Delegate for a delayed method
 	delegate void DelayedMethod();
-	
+
+	/// <summary>
+	/// Awake this instance.
+	/// </summary>
 	void Awake()
 	{
 		GameManager.Instance.AddObstacleBall(gameObject);
 	}
 
-	// Use this for initialization
+	/// <summary>
+	/// Use this for initialization.
+	/// </summary>
 	public override void Start () {
-		Activated = false;
+		isActivated = false;
 
+		// Wait 3 seconds and then activate the ball
 		StartCoroutine(WaitAndDo(3, ActiveBall));
 
 		base.Start();
 	}
 
+	/// <summary>
+	/// Actives the ball.
+	/// </summary>
 	public void ActiveBall()
 	{
-
-
-		Activated = true;
+		isActivated = true;
 		ShootBall();
 	}
 
+	/// <summary>
+	/// Shoots the ball at a random direction.
+	/// </summary>
 	public void ShootBall()
 	{
 		// Randomize a random direction
@@ -43,11 +52,20 @@ public abstract class ObstacleBall : Ball {
 		rigidbody.AddForce(V * speed);
 	}
 
+	/// <summary>
+	/// Waits a number of seconds and then fires the passed method.
+	/// </summary>
+	/// <returns>The and do.</returns>
+	/// <param name="time">Time.</param>
+	/// <param name="method">Method.</param>
 	IEnumerator WaitAndDo(float time, DelayedMethod method)
 	{
 		yield return new WaitForSeconds(time);
 		method();
 	}
+	/// <summary>
+	/// Destroy event.
+	/// </summary>
 	void OnDestroy () {
 		GameManager.Instance.DeleteObstacleBall(gameObject);
 	}

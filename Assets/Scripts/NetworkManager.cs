@@ -1,54 +1,69 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// A class for spawning gameobjects over the network.
+/// </summary>
 public class NetworkManager : MonoBehaviour {
 
+	// The player ball to spawn
 	public GameObject defaultPlayerBallPrefab;
+
+	// The obstacle ball to spawn
 	public GameObject defaultObstacleBallPrefab;
 
-	// Use this for initialization
+	/// <summary>
+	/// Use this for initialization.
+	/// </summary>
 	void Start () 
 	{
 
 	}
 	
-	// Update is called once per frame
+	/// <summary>
+	/// Update is called once per frame
+	/// </summary>
 	void Update () 
 	{
 	
 	}
 
+	/// <summary>
+	/// Spawns the main player ball at a random position.
+	/// </summary>
 	public void SpawnMainPlayerBall()
 	{
 
-		Vector3 v3Pos = Input.mousePosition;
+		// Instantiate the main player ball
+		GameObject playerBall = Instantiate(defaultPlayerBallPrefab, RandomPostition(), Quaternion.identity) as GameObject;;
 
-		// Calculate the screen width
-		float screen_width = Camera.main.orthographicSize * Camera.main.aspect;
-
-		// Get distance the paddle is in front of the camera
-		v3Pos.z = Mathf.Abs(transform.position.z - Camera.main.transform.position.z);
-		v3Pos = Camera.main.ScreenToWorldPoint (v3Pos);
-		v3Pos.x = Mathf.Clamp(v3Pos.x, -screen_width +  (defaultPlayerBallPrefab.renderer.bounds.size.x / 2) , screen_width -  (defaultPlayerBallPrefab.renderer.bounds.size.x / 2));
-		v3Pos.y = Mathf.Clamp(v3Pos.y, -7 +  (defaultPlayerBallPrefab.renderer.bounds.size.y / 2) , 10 -  (defaultPlayerBallPrefab.renderer.bounds.size.y / 2));
-		v3Pos.z = 0;
-		GameObject playerBall = Instantiate(defaultPlayerBallPrefab, v3Pos, Quaternion.identity) as GameObject;;
-
-
+		// Add the mouse input script to the ball
 		playerBall.AddComponent("MouseInputInterface");
 
 	}
 
+	/// <summary>
+	/// Spawns an obstacle ball.
+	/// </summary>
+	/// <returns>The obstacle ball.</returns>
 	public GameObject SpawnObstacleBall()
 	{
+		// Instantiate the obstacle ball at a random position
 		GameObject obstacleBall = Instantiate(defaultObstacleBallPrefab,  RandomPostition(), Quaternion.identity) as GameObject;
+
+		// Set the tag
 		obstacleBall.tag = "ObstacleBall";
+
 		return obstacleBall;
-		
 	}
 
+	/// <summary>
+	/// Returns a random position on the board.
+	/// </summary>
+	/// <returns>The postition.</returns>
 	Vector3 RandomPostition()
 	{
-		return new Vector3 (Random.Range (-16.0f, 16.0f), Random.Range (-6f, 9f), 0);
+		// Gets a random position on the x and y axis between a number range
+		return new Vector3 (Random.Range (-620f, 620f), Random.Range (-230f, 340f), 0);
 	}
 }

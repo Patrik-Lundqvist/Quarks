@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Default player ball.
+/// </summary>
 public class DefaultPlayerBall : PlayerBall {
 
 	// Use this for initialization

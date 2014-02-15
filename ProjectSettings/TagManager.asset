@@ -4,9 +4,11 @@
 TagManager:
   tags:
   - ObstacleBall
-  - ManaReg
+  - PowerReg
   - DeletionWall
   - BottomWall
+  - 
+  - ManaReg
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   Builtin Layer 6: 
   Builtin Layer 7: 
   User Layer 8: PlayerBall
-  User Layer 9: ManaReg
+  User Layer 9: PowerReg
   User Layer 10: ObstacleBall
   User Layer 11: ObstacleBallPhys
   User Layer 12: UILayer
