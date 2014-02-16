@@ -6,6 +6,8 @@ using System.Collections;
 /// </summary>
 public abstract class PlayerBall : Ball {
 
+
+
 	// Number of current regen points
 	public int powerReg;
 
@@ -57,7 +59,12 @@ public abstract class PlayerBall : Ball {
 
 		if(hitobject == "ObstacleBall")
 		{
-			GameOver();
+			// If we are not invulnerable, game over
+			if(!isInvulnerable)
+			{
+				GameOver();
+			}
+
 		}
 	
 	}
@@ -114,9 +121,11 @@ public abstract class PlayerBall : Ball {
 			ob.GetComponent<SpriteRenderer>().enabled = false;
 		}
 
+		GameManager.Instance.GameOver();
+
 		Destroy(this.gameObject);
 
-		GameManager.Instance.GameOver();
+
 	}
 
 	/// <summary>
@@ -126,4 +135,5 @@ public abstract class PlayerBall : Ball {
 		// Delete the ball from the main list
 		PlayerManager.Instance.DeletePlayerBall();
 	}
+
 }

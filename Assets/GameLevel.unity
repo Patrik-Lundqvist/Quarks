@@ -359,7 +359,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28974bccbd2d1ca4b8ba9a230dc434f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpellPrefabList:
+  - {fileID: 100000, guid: 85d6f5bae5f9e8347937ca4ed3f6c980, type: 2}
+  - {fileID: 100000, guid: 85d6f5bae5f9e8347937ca4ed3f6c980, type: 2}
+  - {fileID: 100000, guid: 85d6f5bae5f9e8347937ca4ed3f6c980, type: 2}
+  - {fileID: 100000, guid: 85d6f5bae5f9e8347937ca4ed3f6c980, type: 2}
   castSpell: {fileID: 0}
+  spellManager: {fileID: 0}
 --- !u!1 &277119392
 GameObject:
   m_ObjectHideFlags: 0

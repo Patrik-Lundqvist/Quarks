@@ -6,6 +6,8 @@ using System.Collections;
 /// </summary>
 public abstract class Ball : MonoBehaviour {
 
+
+
 	// Variables for storing ball state
 	private Vector3 savedVelocity;
 	private Vector3 savedAngularVelocity;
@@ -13,12 +15,16 @@ public abstract class Ball : MonoBehaviour {
 	// The different ball materials
 	public Material ballMaterial;
 	public Material ballMaterialDeActived;
+	public Material ballMaterialInvulnerable;
 
 	// Physical material of the ball
 	public PhysicMaterial ballPhysMaterial;
 
 	// Is the ball active
 	private bool _isActivated;
+
+	// If our ball can die
+	public bool _isInvulnerable;
 
 	/// <summary>
 	/// Gets or sets a value indicating whether this <see cref="Ball"/> is activated.
@@ -42,6 +48,31 @@ public abstract class Ball : MonoBehaviour {
 
 			// Set the value
 			_isActivated = value; 
+		}
+	}
+
+	/// <summary>
+	/// Gets or sets a value indicating whether this ball is invulnerable.
+	/// </summary>
+	/// <value><c>true</c> if is invulnerable; otherwise, <c>false</c>.</value>
+	public bool isInvulnerable
+	{
+		get { return _isInvulnerable; }
+		set 
+		{ 
+			if(value)
+			{
+				// Change the material
+				renderer.material = ballMaterialInvulnerable;
+			}
+			else
+			{
+				// Change the material
+				renderer.material = ballMaterial;
+			}
+			
+			// Set the value
+			_isInvulnerable = value; 
 		}
 	}
 
@@ -100,8 +131,6 @@ public abstract class Ball : MonoBehaviour {
 		savedVelocity = rigidbody.velocity;
 		// Save the direction
 		savedAngularVelocity = rigidbody.angularVelocity;
-		// Make sure the ball can't move
-		rigidbody.isKinematic = true;
 	}
 
 	/// <summary>
@@ -109,8 +138,6 @@ public abstract class Ball : MonoBehaviour {
 	/// </summary>
 	public void StartBall()
 	{
-		// Make sure the ball can move
-		rigidbody.isKinematic = false;
 		// Add the saved velocity
 		rigidbody.AddForce( savedVelocity, ForceMode.VelocityChange );
 		// Add the saved direction

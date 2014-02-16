@@ -39,6 +39,15 @@ public class GameManager : MonoBehaviour {
 	}
 
 	/// <summary>
+	/// Gets the current game time.
+	/// </summary>
+	/// <value>The current game time.</value>
+	public float CurrentGameTime
+	{
+		get { return gameTimer.CurrentTime; }
+	}
+
+	/// <summary>
 	/// Use this for initialization
 	/// </summary>
 	void Start () {
@@ -75,8 +84,6 @@ public class GameManager : MonoBehaviour {
 		// Spawn the player ball
 		gameObject.GetComponent<NetworkManager>().SpawnMainPlayerBall();
 
-		// Spawn the first obstacle ball
-		SpawnObstacleBall();
 
 		// Run the StartGame() function with a delay
 		StartCoroutine(WaitAndStartGame());
@@ -87,6 +94,9 @@ public class GameManager : MonoBehaviour {
 	/// </summary>
 	void StartGame()
 	{
+		// Spawn the first obstacle ball
+		SpawnObstacleBall();
+
 		// Start the game timer
 		gameTimer.StartTimer();
 

@@ -89,8 +89,10 @@ MonoBehaviour:
   ballMaterial: {fileID: 2100000, guid: 1616b2ffec558954faa8cf07d2beb8cc, type: 2}
   ballMaterialDeActived: {fileID: 2100000, guid: 84b9e1d19d11078d11005b9844295342,
     type: 2}
-  BounceWall: {fileID: 8300000, guid: cd0f85c6da96d8943a314385be3b9728, type: 3}
+  ballMaterialInvulnerable: {fileID: 2100000, guid: d06e1185e9d9daa4fb4e0db92d4970db,
+    type: 2}
   ballPhysMaterial: {fileID: 13400000, guid: f4b2f2b3d3396c8468e07f45e96e1a6b, type: 2}
+  _isInvulnerable: 0
   powerReg: 0
 --- !u!114 &11400002
 MonoBehaviour:

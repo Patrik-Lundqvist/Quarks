@@ -6,15 +6,25 @@ using System.Collections;
 /// </summary>
 public class Push : Spell {
 
+	Vector2 startSize;
+	Vector2 endSize;
+	
+	float spellSize;
+	float moveTime = 0.0f;
+	
+	OTSprite sprite;     
+
 	/// <summary>
 	/// Constructor
 	/// </summary>
 	public Push()
 	{
 		// Set the powercost of the spell
-		powerCost = 10.0f;
+		powerCost = 1.0f;
 		// Set the sound clip
 		soundClip = "Push";
+		// Set the name of the spell
+		spellName = "Push";
 	}
 
 	/// <summary>
@@ -22,7 +32,17 @@ public class Push : Spell {
 	/// </summary>
 	public override void Precast()
 	{
-		FindTargets(200f);
+		spellSize = 300 / caster.transform.localScale.x;
+
+		// get this star's sprite class
+		sprite = GetComponent<OTSprite>();
+
+		sprite.size = new Vector2(0,0);
+		startSize = sprite.size;
+		endSize = new Vector2(spellSize, spellSize);
+
+		// Make the ball invulnerable
+		caster.isInvulnerable = true;
 
 		base.Precast();
 	}
@@ -32,21 +52,42 @@ public class Push : Spell {
 	/// </summary>
 	public override void Casting()
 	{
-		// For every target
-		foreach(GameObject ball in targets)
+		moveTime += Time.deltaTime * 3f;
+		
+		sprite.size = Vector2.Lerp (startSize, endSize, moveTime);
+
+
+
+		if(sprite.size.x >= spellSize)
 		{
-			// Set the direction
-			Vector3 dir = ball.transform.position - caster.transform.position;
-
-			// Normalize the direction
-			dir.Normalize();
-
-			// Make the ball move in the oposite direction
-			ball.gameObject.transform.rigidbody.velocity = dir * ball.rigidbody.velocity.magnitude;
-
+			EndCasting();
+			caster.isInvulnerable = false;
 		}
 
 		base.Casting();
 
+	}
+
+	/// <summary>
+	/// If we trigger any of the trigger colliders
+	/// </summary>
+	/// <param name="other">Other.</param>
+	void OnTriggerEnter(Collider other)	
+	{	
+		// Get the object name of the object which we collided with
+		string hitobject = other.gameObject.tag;
+		
+		if(hitobject == "ObstacleBall")
+		{
+			// Set the direction
+			Vector3 dir = other.gameObject.transform.position - this.gameObject.transform.position;
+			
+			// Normalize the direction
+			dir.Normalize();
+			
+			// Make the ball move in the oposite direction
+			other.gameObject.gameObject.transform.rigidbody.velocity = dir * other.gameObject.rigidbody.velocity.magnitude;
+		}
+		
 	}
 }

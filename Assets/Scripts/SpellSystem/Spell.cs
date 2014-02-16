@@ -6,12 +6,12 @@ using System.Collections.Generic;
 /// Abstract class containing a frame for spells and some basic functionality
 /// </summary>
 public abstract class Spell : MonoBehaviour {
-
+	
 	// Current status of the spell
 	public SpellStatus status = SpellStatus.Ready;
 
 	// Gameobject who casted the spell
-	public GameObject caster;
+	public Ball caster;
 
 	// A list of targets found
 	public List<GameObject> targets;
@@ -19,20 +19,28 @@ public abstract class Spell : MonoBehaviour {
 	// The power cost of the spell
 	public float powerCost;
 
+	// Name of the spell
+	public string spellName;
+
 	// A soundclip which is played when the spell is casted
 	public string soundClip;
+
+	// The spell icon shown in the UI
+	public Texture txIcon;
 
 	/// <summary>
 	/// Setup for the spell.
 	/// </summary>
 	/// <param name="caster">Caster.</param>
-	public virtual void Setup(GameObject caster)
+	public virtual void Setup(Ball caster)
 	{
 		// Initialize the list
 		targets = new List<GameObject>();
 
 		// Set the caster
 		this.caster = caster;
+
+		this.gameObject.transform.parent = caster.transform;
 	}
 
 	/// <summary>
@@ -48,17 +56,6 @@ public abstract class Spell : MonoBehaviour {
 	/// </summary>
 	public virtual void Precast()
 	{
-		// Check if we have enough power for the spell
-		if(PlayerManager.Instance.powerCurrent < powerCost)
-		{
-			// Not enough power, exit
-			NoPower();
-			return;
-		}
-
-		// Remove the the power for the player
-		PlayerManager.Instance.powerCurrent -= powerCost;
-
 		// Check if we have a sound clip
 		if(!string.IsNullOrEmpty(soundClip))
 		{
@@ -75,8 +72,7 @@ public abstract class Spell : MonoBehaviour {
 	/// </summary>
 	public virtual void  Casting()
 	{
-		// End the casting
-		EndCasting();
+	
 	}
 
 	/// <summary>
@@ -94,7 +90,7 @@ public abstract class Spell : MonoBehaviour {
 	public virtual void  CleanUp()
 	{
 		// Delete this spell object
-		Destroy(this);
+		Destroy(this.gameObject);
 	}
 
 	/// <summary>
@@ -124,17 +120,7 @@ public abstract class Spell : MonoBehaviour {
 		}
 	}
 
-	/// <summary>
-	/// Function runs when the player doesn't have enough power
-	/// </summary>
-	void NoPower()
-	{
-		// Make a GUI notice
-		GUIManager.Instance.NoPowerNotice(powerCost);
 
-		// Clean up this instance
-		CleanUp();
-	}
 
 	/// <summary>
 	/// Update is called every frame.
@@ -147,4 +133,6 @@ public abstract class Spell : MonoBehaviour {
 			Casting();
 		}
 	}
+	
+
 }

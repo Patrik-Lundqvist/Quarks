@@ -35,7 +35,7 @@ public class NetworkManager : MonoBehaviour {
 	{
 
 		// Instantiate the main player ball
-		GameObject playerBall = Instantiate(defaultPlayerBallPrefab, RandomPostition(), Quaternion.identity) as GameObject;;
+		GameObject playerBall = Instantiate(defaultPlayerBallPrefab, RandomPostition(), Quaternion.identity) as GameObject;
 
 		// Add the mouse input script to the ball
 		playerBall.AddComponent("MouseInputInterface");
