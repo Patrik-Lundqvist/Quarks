@@ -6,7 +6,10 @@ using System.Collections.Generic;
 /// Abstract class containing a frame for spells and some basic functionality
 /// </summary>
 public abstract class Spell : MonoBehaviour {
-	
+
+	// If the spell is casted on the player ball
+	public bool isSelfCast;
+
 	// Current status of the spell
 	public SpellStatus status = SpellStatus.Ready;
 
@@ -39,8 +42,6 @@ public abstract class Spell : MonoBehaviour {
 
 		// Set the caster
 		this.caster = caster;
-
-		this.gameObject.transform.parent = caster.transform;
 	}
 
 	/// <summary>

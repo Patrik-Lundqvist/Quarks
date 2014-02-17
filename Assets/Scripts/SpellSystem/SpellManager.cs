@@ -80,6 +80,9 @@ public class SpellManager : MonoBehaviour {
 		// Setup the spell
 		SpellInstance.Setup(playerBallScript);
 
+		if(SpellInstance.isSelfCast)
+			SpellInstance.gameObject.transform.parent = SpellInstance.caster.gameObject.transform;
+
 		// Cast the spell
 		SpellInstance.Cast();
 

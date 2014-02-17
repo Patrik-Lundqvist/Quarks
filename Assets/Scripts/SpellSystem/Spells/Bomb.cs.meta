@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 2b5e5570c39a1294a9656b59ef964c7e
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - caster: {instanceID: 0}
+  - txIcon: {fileID: 2800000, guid: aef6958ea24831045a38d48b4ff3c37b, type: 3}
+  - bombTexture: {fileID: 2800000, guid: 487672c2cccfd3c42aac34c6d88c669b, type: 3}
+  - bombTextureBlink: {fileID: 2800000, guid: d69b72a03587cea48843a516bb3faf5c, type: 3}
+  - bombExplosion: {fileID: 2800000, guid: e1b3ce3eacb822c47a894607a2a2fc4c, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

@@ -5,11 +5,7 @@ using System.Collections;
 /// Player ball.
 /// </summary>
 public abstract class PlayerBall : Ball {
-
-
-
-	// Number of current regen points
-	public int powerReg;
+	
 
 	// The regeneration rate of the power
 	private float powerRegRate = 2f;
@@ -34,14 +30,6 @@ public abstract class PlayerBall : Ball {
 	/// Update is called once per frame.
 	/// </summary>
 	public override void Update () {
-
-		// If we have more than 1 regen points, regen the power
-		if(powerReg > 0)
-		{
-			// Make sure we're not at full power
-			if(PlayerManager.Instance.powerCurrent < 100)
-				PlayerManager.Instance.powerCurrent += powerRegRate * Time.deltaTime;
-		}
 	
 		base.Update();
 	}
@@ -80,8 +68,6 @@ public abstract class PlayerBall : Ball {
 
 		if(hitobject == "PowerReg")
 		{
-			// Add a power point
-			powerReg += 1;
 
 			// Draw a sprite at the others balls position
 			other.gameObject.GetComponent<SpriteRenderer>().enabled = true;
@@ -100,12 +86,27 @@ public abstract class PlayerBall : Ball {
 
 		if(hitobject == "PowerReg")
 		{
-			// Delete a power point
-			powerReg -= 1;
-
 			// Delete the sprite
 			other.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 		}
+	}
+
+	/// <summary>
+	/// This is called once per frame for every collision
+	/// </summary>
+	/// <param name="other">Other.</param>
+	void OnTriggerStay(Collider other)
+	{
+		// Get the object name of the object which we collided with
+		string hitobject = other.gameObject.tag;
+		
+		if(hitobject == "PowerReg")
+		{
+			// Make sure we're not at full power
+			if(PlayerManager.Instance.powerCurrent < 100)
+				PlayerManager.Instance.powerCurrent += powerRegRate * Time.deltaTime;
+		}
+		
 	}
 
 	/// <summary>

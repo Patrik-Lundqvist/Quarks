@@ -25,6 +25,8 @@ public class Push : Spell {
 		soundClip = "Push";
 		// Set the name of the spell
 		spellName = "Push";
+
+		isSelfCast = true;
 	}
 
 	/// <summary>

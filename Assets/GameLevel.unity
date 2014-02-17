@@ -361,7 +361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpellPrefabList:
   - {fileID: 100000, guid: 85d6f5bae5f9e8347937ca4ed3f6c980, type: 2}
-  - {fileID: 100000, guid: 85d6f5bae5f9e8347937ca4ed3f6c980, type: 2}
+  - {fileID: 100000, guid: 59b559c7d35fa384c86befb42ababbb8, type: 2}
   - {fileID: 100000, guid: 85d6f5bae5f9e8347937ca4ed3f6c980, type: 2}
   - {fileID: 100000, guid: 85d6f5bae5f9e8347937ca4ed3f6c980, type: 2}
   castSpell: {fileID: 0}
@@ -801,7 +801,7 @@ Camera:
   far clip plane: 2001
   field of view: 60
   orthographic: 1
-  orthographic size: 240
+  orthographic size: 360
   m_Depth: -2
   m_CullingMask:
     serializedVersion: 2
