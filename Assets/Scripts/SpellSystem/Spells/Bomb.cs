@@ -15,6 +15,8 @@ public class Bomb : Spell {
 
 	bool isExploding;
 
+
+
 	public Texture bombTexture;
 	public Texture bombTextureBlink;
 	public Texture bombExplosion;
@@ -29,7 +31,7 @@ public class Bomb : Spell {
 		// Set the powercost of the spell
 		powerCost = 1.0f;
 		// Set the sound clip
-		soundClip = "Bomb";
+		soundClip = "PlaceBomb";
 		// Set the name of the spell
 		spellName = "Bomb";
 
@@ -77,6 +79,7 @@ public class Bomb : Spell {
 				sprite.size = new Vector2(0,0);
 				sprite.image = bombExplosion;
 				sprite.additive = false;
+				new OTSound("BombExplode");
 			}
 			else
 			{
@@ -125,6 +128,8 @@ public class Bomb : Spell {
 	public IEnumerator DoTextureLoop(){
 		bool isBright = false;
 		while (!isExploding){
+			// Play the sound clip
+			new OTSound("BombClick");
 
 			if(isBright)
 			{

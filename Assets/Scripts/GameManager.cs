@@ -10,6 +10,12 @@ public class GameManager : MonoBehaviour {
 	// Is the game is running
 	public bool isRunning = false;
 
+	// Has a game ended
+	public bool isGameOver = false;
+
+	// Final time
+	public float finalTime;
+
 	// Current game message
 	public string gameInfo;
 
@@ -25,9 +31,6 @@ public class GameManager : MonoBehaviour {
 	// Singleton
 	public GameManager gameManager;
 	public static GameManager Instance { get; private set; }
-
-	// Delegate for a delayed firing
-	delegate void DelayedMethod();
 
 	/// <summary>
 	/// Gets the number of obstacle balls.
@@ -76,14 +79,29 @@ public class GameManager : MonoBehaviour {
 	/// <summary>
 	/// Begins a new game.
 	/// </summary>
-	void BeginNewGame()
+	public void BeginNewGame()
 	{
+		isGameOver = false;
+
+		gameTimer.Reset();
+
+		// Get the bottom wall
+		GameObject bottomWall = GameObject.FindGameObjectWithTag("BottomWall");
+		
+		// Enable the bottom wall
+		bottomWall.GetComponent<Collider>().enabled = true;
+
+		// Set the global gravity with a downward force
+		Physics.gravity = new Vector3(0, 0, 0);
+
 		// Hide the cursor
 		Screen.showCursor = false;
 
+		// Reset players current power
+		PlayerManager.Instance.powerCurrent = 0;
+
 		// Spawn the player ball
 		gameObject.GetComponent<NetworkManager>().SpawnMainPlayerBall();
-
 
 		// Run the StartGame() function with a delay
 		StartCoroutine(WaitAndStartGame());
@@ -115,8 +133,11 @@ public class GameManager : MonoBehaviour {
 		// Set the game as not running
 		isRunning = false;
 
+		// Set the final time
+		finalTime = gameTimer.CurrentTime;
+
 		// Set the game info to the current game time
-		gameInfo = gameTimer.CurrentTimeStamp;
+		gameInfo = "Game Over";
 
 		// Get the bottom wall
 		GameObject bottomWall = GameObject.FindGameObjectWithTag("BottomWall");
@@ -129,6 +150,9 @@ public class GameManager : MonoBehaviour {
 
 		// Show the cursor
 		Screen.showCursor = true;
+
+		// Set the game as over
+		isGameOver = true;
 	}
 
 	/// <summary>

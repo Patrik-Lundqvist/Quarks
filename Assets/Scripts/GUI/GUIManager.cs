@@ -39,6 +39,8 @@ public class GUIManager : MonoBehaviour {
 	public Texture2D fullTex;
 	// END OF PROGRESS BAR
 
+	public Texture2D againButton;
+
 	/// <summary>
 	/// Awake this instance.
 	/// </summary>
@@ -116,7 +118,7 @@ public class GUIManager : MonoBehaviour {
 				GUI.EndGroup();
 				
 				// Time
-			GUI.Label(new Rect(68,62,50,19), "Time: " + Truncate(GameManager.Instance.CurrentGameTime, 0).ToString("0"), GameUISkin.GetStyle("UIBottomLabel"));	
+				GUI.Label(new Rect(68,62,50,19), "Time: " + Truncate(GameManager.Instance.CurrentGameTime, 0).ToString("0"), GameUISkin.GetStyle("UIBottomLabel"));	
 
 				// Draw the spells
 				GUI.BeginGroup(new Rect(980, 20, 270, 66 ));
@@ -139,12 +141,22 @@ public class GUIManager : MonoBehaviour {
 			}
 			else
 			{
-				// Power-label
+				// Bottom label
 				GUI.Label(new Rect( Screen.width / 2 - 50, 30, 100, 50), GameManager.Instance.gameInfo, GameUISkin.GetStyle("UIGameInfo"));
 
 			}
 
 		GUI.EndGroup();
+
+		if(GameManager.Instance.isGameOver)
+		{
+			GUI.Label(new Rect( Screen.width / 2 - 75, (Screen.height - 108) / 2 - 75, 150, 150), Truncate(GameManager.Instance.finalTime, 1).ToString(), GameUISkin.GetStyle("UIBigCenterLabel"));
+
+			if(GUI.Button(new Rect( Screen.width / 2 - 107, (Screen.height - 108) / 2 + 100, 214, 71), againButton))
+			{
+				GameManager.Instance.BeginNewGame();
+			}
+		}
 	}
 
 	/// <summary>
