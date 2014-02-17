@@ -100,6 +100,9 @@ public class GameManager : MonoBehaviour {
 		// Reset players current power
 		PlayerManager.Instance.powerCurrent = 0;
 
+		// Reset spawn time
+		nextSpawnTime = 5;
+
 		// Spawn the player ball
 		gameObject.GetComponent<NetworkManager>().SpawnMainPlayerBall();
 
