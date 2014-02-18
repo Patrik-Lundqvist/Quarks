@@ -11,6 +11,10 @@ public class GUIManager : MonoBehaviour {
 	// The UI skin
 	public GUISkin GameUISkin;
 
+	public bool showTimeTitle;
+	public bool showScore;
+	public bool showScoreGrade;
+
 	// Spell keys
 	private string[] keys = new string[4] { "Q","W","E","R" };
 
@@ -150,12 +154,27 @@ public class GUIManager : MonoBehaviour {
 
 		if(GameManager.Instance.isGameOver)
 		{
-			GUI.Label(new Rect( Screen.width / 2 - 75, (Screen.height - 108) / 2 - 75, 150, 150), Truncate(GameManager.Instance.finalTime, 1).ToString(), GameUISkin.GetStyle("UIBigCenterLabel"));
-
-			if(GUI.Button(new Rect( Screen.width / 2 - 107, (Screen.height - 108) / 2 + 100, 214, 71), againButton))
+			if(showTimeTitle)
 			{
-				GameManager.Instance.BeginNewGame();
+				GUI.Label(new Rect( Screen.width / 2 - 31, (Screen.height - 108) / 2 - 160, 62, 62), "Final score", GameUISkin.GetStyle("UITimeLabel"));
 			}
+
+			if(showScore)
+			{
+				GUI.Label(new Rect( Screen.width / 2 - 75, (Screen.height - 108) / 2 - 75, 150, 150), Truncate(GameManager.Instance.finalTime, 1).ToString(), GameUISkin.GetStyle("UIBigCenterLabel"));
+			}
+
+			if(showScoreGrade)
+			{
+				GUI.Label(new Rect( Screen.width / 2 - 31, (Screen.height - 108) / 2 + 98, 62, 62), GameManager.Instance.scoreGrade, GameUISkin.GetStyle("UITimeLabel"));
+
+				if(GUI.Button(new Rect( Screen.width / 2 - 107, (Screen.height - 108) / 2 + 190, 214, 71), againButton))
+				{
+					GameManager.Instance.BeginNewGame();
+				}
+			}
+
+
 		}
 	}
 

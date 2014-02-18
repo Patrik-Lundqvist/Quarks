@@ -25,8 +25,16 @@ public class GameManager : MonoBehaviour {
 	// Timer for the game time
 	private Timer gameTimer;
 
+	public string scoreGrade;
+
 	// List of all the current obstacle balls
 	private List<GameObject> ObstacleBallList = new List<GameObject>();
+
+	// Music track
+	OTSound music;
+
+	// Music volume
+	float musicVolume = 0.7f;
 
 	// Singleton
 	public GameManager gameManager;
@@ -54,6 +62,9 @@ public class GameManager : MonoBehaviour {
 	/// Use this for initialization
 	/// </summary>
 	void Start () {
+
+		music = new OTSound("Music").Idle();
+
 		// Get and set the game timer
 		gameTimer = gameObject.GetComponent<Timer>();
 
@@ -83,31 +94,19 @@ public class GameManager : MonoBehaviour {
 	{
 		isGameOver = false;
 
-		gameTimer.Reset();
+		music.Loop().Play().Volume(musicVolume);
 
-		// Get the bottom wall
-		GameObject bottomWall = GameObject.FindGameObjectWithTag("BottomWall");
-		
-		// Enable the bottom wall
-		bottomWall.GetComponent<Collider>().enabled = true;
+		ResetGame();
 
-		// Set the global gravity with a downward force
-		Physics.gravity = new Vector3(0, 0, 0);
+		// Lock the cursor
+		Screen.lockCursor = true;
 
 		// Hide the cursor
 		Screen.showCursor = false;
 
-		// Reset players current power
-		PlayerManager.Instance.powerCurrent = 0;
-
-		// Reset spawn time
-		nextSpawnTime = 5;
-
-		// Spawn the player ball
-		gameObject.GetComponent<NetworkManager>().SpawnMainPlayerBall();
-
 		// Run the StartGame() function with a delay
 		StartCoroutine(WaitAndStartGame());
+
 	}
 
 	/// <summary>
@@ -130,17 +129,25 @@ public class GameManager : MonoBehaviour {
 	/// </summary>
 	public void GameOver()
 	{
-		// Stop the timer
-		gameTimer.StopTimer();
+		// Set the game as over
+		isGameOver = true;
 
 		// Set the game as not running
 		isRunning = false;
+
+		// Stop the music
+		StartCoroutine(FadeOutMusic());
+
+		// Stop the timer
+		gameTimer.StopTimer();
 
 		// Set the final time
 		finalTime = gameTimer.CurrentTime;
 
 		// Set the game info to the current game time
 		gameInfo = "Game Over";
+
+		scoreGrade = "A+";
 
 		// Get the bottom wall
 		GameObject bottomWall = GameObject.FindGameObjectWithTag("BottomWall");
@@ -154,8 +161,16 @@ public class GameManager : MonoBehaviour {
 		// Show the cursor
 		Screen.showCursor = true;
 
-		// Set the game as over
-		isGameOver = true;
+		// Unlock the cursor
+		Screen.lockCursor = false;
+
+		ShowScore();
+	}
+
+
+	public void ShowScore()
+	{
+		StartCoroutine(ShowScoreDelay());
 	}
 
 	/// <summary>
@@ -190,6 +205,103 @@ public class GameManager : MonoBehaviour {
 	/// <param name="obstacleBall">Obstacle ball.</param>
 	public void DeleteObstacleBall(GameObject obstacleBall){
 		ObstacleBallList.Remove(obstacleBall);
+	}
+
+	/// <summary>
+	/// Fades the out music.
+	/// </summary>
+	/// <returns>The out music.</returns>
+	public IEnumerator FadeOutMusic(){
+
+			float t = musicVolume;
+
+			while (t > 0.05f) 
+			{
+
+				t -= Time.deltaTime;
+				if(isGameOver)
+				{
+					music.Volume(t);
+				}
+				
+
+				yield return new WaitForSeconds(0.05f);
+			}
+			
+			if(isGameOver)
+			{
+				music.Stop();
+			}
+	}
+
+	public IEnumerator ShowScoreDelay(){
+		
+
+		// Wait for a second
+		yield return new WaitForSeconds(2);
+
+
+		new OTSound("BassDrum");
+
+		GUIManager.Instance.showTimeTitle = true;
+
+
+		yield return new WaitForSeconds(1);
+
+		new OTSound("SnareDrum");
+
+		GUIManager.Instance.showScore = true;
+
+		yield return new WaitForSeconds(1);
+
+		GUIManager.Instance.showScoreGrade = true;
+
+		new OTSound("FanFare");
+
+	}
+
+
+
+	/// <summary>
+	/// Resets the game.
+	/// </summary>
+	void ResetGame()
+	{
+		GUIManager.Instance.showScoreGrade = false;
+		GUIManager.Instance.showScore = false;
+		GUIManager.Instance.showTimeTitle = false;
+
+		// Reset players current power
+		PlayerManager.Instance.powerCurrent = 0;
+		
+		// Reset spawn time
+		nextSpawnTime = 5;
+
+		// Reset timer
+		gameTimer.Reset();
+
+		// Get the bottom wall
+		GameObject bottomWall = GameObject.FindGameObjectWithTag("BottomWall");
+		
+		// Enable the bottom wall
+		bottomWall.GetComponent<Collider>().enabled = true;
+		
+		// Set the global gravity with a downward force
+		Physics.gravity = new Vector3(0, 0, 0);
+
+		RemoveObstacleBalls();
+
+		// Spawn the player ball
+		gameObject.GetComponent<NetworkManager>().SpawnMainPlayerBall();
+
+	}
+
+	void RemoveObstacleBalls()
+	{
+		foreach(GameObject ball in ObstacleBallList)
+		{
+			Destroy(ball);
+		}
 	}
 
 	/// <summary>
