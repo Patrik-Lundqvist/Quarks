@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
 	// Timer for the game time
 	private Timer gameTimer;
 
-	public string scoreGrade;
+	public string highScore;
 
 	// List of all the current obstacle balls
 	private List<GameObject> ObstacleBallList = new List<GameObject>();
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour {
 		// Set the game info to the current game time
 		gameInfo = "Game Over";
 
-		scoreGrade = "A+";
+		highScore = "New high score!";
 
 		// Get the bottom wall
 		GameObject bottomWall = GameObject.FindGameObjectWithTag("BottomWall");
@@ -254,8 +254,9 @@ public class GameManager : MonoBehaviour {
 
 		yield return new WaitForSeconds(1);
 
-		GUIManager.Instance.showScoreGrade = true;
+		GUIManager.Instance.showHighScore = true;
 
+		new OTSound("HighHat");
 		new OTSound("FanFare");
 
 	}
@@ -267,7 +268,7 @@ public class GameManager : MonoBehaviour {
 	/// </summary>
 	void ResetGame()
 	{
-		GUIManager.Instance.showScoreGrade = false;
+		GUIManager.Instance.showHighScore = false;
 		GUIManager.Instance.showScore = false;
 		GUIManager.Instance.showTimeTitle = false;
 

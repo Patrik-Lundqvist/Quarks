@@ -13,7 +13,7 @@ public class GUIManager : MonoBehaviour {
 
 	public bool showTimeTitle;
 	public bool showScore;
-	public bool showScoreGrade;
+	public bool showHighScore;
 
 	// Spell keys
 	private string[] keys = new string[4] { "Q","W","E","R" };
@@ -164,9 +164,9 @@ public class GUIManager : MonoBehaviour {
 				GUI.Label(new Rect( Screen.width / 2 - 75, (Screen.height - 108) / 2 - 75, 150, 150), Truncate(GameManager.Instance.finalTime, 1).ToString(), GameUISkin.GetStyle("UIBigCenterLabel"));
 			}
 
-			if(showScoreGrade)
+			if(showHighScore)
 			{
-				GUI.Label(new Rect( Screen.width / 2 - 31, (Screen.height - 108) / 2 + 98, 62, 62), GameManager.Instance.scoreGrade, GameUISkin.GetStyle("UITimeLabel"));
+				GUI.Label(new Rect( Screen.width / 2 - 31, (Screen.height - 108) / 2 + 98, 62, 62), GameManager.Instance.highScore, GameUISkin.GetStyle("UITimeLabel"));
 
 				if(GUI.Button(new Rect( Screen.width / 2 - 107, (Screen.height - 108) / 2 + 190, 214, 71), againButton))
 				{
