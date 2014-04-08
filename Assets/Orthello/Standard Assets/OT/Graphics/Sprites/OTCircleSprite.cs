@@ -88,7 +88,7 @@ public class OTCircleSprite : OTSprite {
 	void CloneGradientColors()
 	{
 		_gradientColors_ = new OTGradientSpriteColor[_gradientColors.Length];
-		for (int c=0; c<_gradientColors.Length; c++)
+		for (var c=0; c<_gradientColors.Length; c++)
 		{
 			_gradientColors_[c] = new OTGradientSpriteColor();
 			_gradientColors_[c].position = _gradientColors[c].position;
@@ -99,7 +99,7 @@ public class OTCircleSprite : OTSprite {
 	
 	bool GradientColorChanged()
 	{
-		for (int c = 0; c < _gradientColors.Length; c++)
+		for (var c = 0; c < _gradientColors.Length; c++)
 		{
 			if (!_gradientColors[c].color.Equals(_gradientColors_[c].color))
 			{
@@ -111,8 +111,8 @@ public class OTCircleSprite : OTSprite {
 	
 	bool GradientMeshChanged()
 	{
-		bool res = false;
-		for (int c = 0; c < _gradientColors.Length; c++)
+		var res = false;
+		for (var c = 0; c < _gradientColors.Length; c++)
 		{
 			if (_gradientColors[c].position < 0) _gradientColors[c].position = 0;
 			if (_gradientColors[c].position > 100) _gradientColors[c].position = 100;
@@ -180,33 +180,33 @@ public class OTCircleSprite : OTSprite {
 
 	protected override void HandleColors()
 	{
-		Color[] gColors = new Color[mesh.vertexCount];
+		var gColors = new Color[mesh.vertexCount];
 		
 		if (_gradientColors.Length<=1)
 		{
-			for (int i=0; i<mesh.vertexCount; i++)
+			for (var i=0; i<mesh.vertexCount; i++)
 				gColors[i] = ( _gradientColors.Length == 0)?tintColor:_gradientColors[0].color;
 		}
 		else
 		{
-			float d =  (1f / divisions);								
-			int di = 1;
-			for (int i=0; i<divisions; i++)
+			var d =  (1f / divisions);								
+			var di = 1;
+			for (var i=0; i<divisions; i++)
 			{
 				if (fillFactor< 1 && fillFactor<(i+1)*d)
 					break;
 				di++;
 			}
 									
-			int r=0;
-			for (int gc=0; gc<_gradientColors.Length; gc++)
+			var r=0;
+			for (var gc=0; gc<_gradientColors.Length; gc++)
 			{
-				OTGradientSpriteColor gCol = _gradientColors[gc];
+				var gCol = _gradientColors[gc];
 				
 				if (gc == 0)
 					gColors[0] = gCol.color;
 													
-				for (int i=0; i<di+1; i++)
+				for (var i=0; i<di+1; i++)
 				{
 					if (gc>0)
 						gColors[1+((r-1)*(di+1))+i] = gCol.color;
@@ -232,16 +232,16 @@ public class OTCircleSprite : OTSprite {
 	
 	List<float> GradientFact()
 	{
-		List<float> rfact = new List<float>();
+		var rfact = new List<float>();
 		if (_gradientColors.Length>0)
 		{
-			for (int i=0; i<_gradientColors.Length; i++)
+			for (var i=0; i<_gradientColors.Length; i++)
 			{
-				OTGradientSpriteColor gc = _gradientColors[i];
+				var gc = _gradientColors[i];
 				rfact.Add((float)gc.position/100);
 				if (gc.size>0)
 				{
-					int _pos = gc.position+gc.size;
+					var _pos = gc.position+gc.size;
 					rfact.Add((float)_pos/100);
 				}
 			}
@@ -264,21 +264,21 @@ public class OTCircleSprite : OTSprite {
 		
 		if (divisions>0 && fillFactor>0)
 		{
-			List<float>rfact = GradientFact();
+			var rfact = GradientFact();
 			
-			float d =  (1f / divisions);									
-			int di = 1;
-			for (int i=0; i<divisions; i++)
+			var d =  (1f / divisions);									
+			var di = 1;
+			for (var i=0; i<divisions; i++)
 			{
 				if (fillFactor< 1 && fillFactor<(i+1)*d)
 					break;
 				di++;
 			}
 						
-			Vector2[] uvs = new Vector2[1+((di+1)*rfact.Count-1)];
+			var uvs = new Vector2[1+((di+1)*rfact.Count-1)];
 			
 			
-			bool rotated = false;
+			var rotated = false;
 	        if (spriteContainer != null && spriteContainer.isReady && spriteContainer is OTSpriteAtlas)
 	        {	
 				if (frameIndex<(spriteContainer as OTSpriteAtlas).atlasData.Length)
@@ -297,24 +297,24 @@ public class OTCircleSprite : OTSprite {
 				uvs[0] = new Vector2(uvRect.xMin + uvRect.width/2, uvRect.yMin + uvRect.height/2);
 			}
 						
-			for (int r=1; r<rfact.Count; r++)
+			for (var r=1; r<rfact.Count; r++)
 			{
-				for (int i=0; i<di; i++)
+				for (var i=0; i<di; i++)
 				{
-					Vector3 v = new Vector3(0, 0.5f * rfact[r], 0);
-	            	Matrix4x4 m = new Matrix4x4();
+					var v = new Vector3(0, 0.5f * rfact[r], 0);
+	            	var m = new Matrix4x4();
 				
 	            	m.SetTRS(Vector3.zero, Quaternion.Euler(0, 0, i * d * -360), Vector3.one);
-	            	Vector3 v1 = m.MultiplyPoint3x4(v);
+	            	var v1 = m.MultiplyPoint3x4(v);
 					
-					float id = (i+1) * d;
+					var id = (i+1) * d;
 					
 	            	m.SetTRS(Vector3.zero, Quaternion.Euler(0, 0, id * -360), Vector3.one);
-	            	Vector3 v2 = m.MultiplyPoint3x4(v);
+	            	var v2 = m.MultiplyPoint3x4(v);
 					
 					if (fillFactor<id)
 					{
-						float f = (id-fillFactor)/d;																				
+						var f = (id-fillFactor)/d;																				
 		            	v2 = v2 - ((v2-v1) * f);
 					}
 					
@@ -335,7 +335,7 @@ public class OTCircleSprite : OTSprite {
 					}
 					else
 					{
-						int dd = di+1;
+						var dd = di+1;
 						if (rotated)
 						{
 							uvs[i+((r-1)*dd)+1] = uvs[0] - new Vector2(-v1.y * uvRect.height, -v1.x * uvRect.width);
@@ -358,46 +358,46 @@ public class OTCircleSprite : OTSprite {
 
 	protected override Mesh GetMesh ()
 	{
-		Mesh mesh = base.GetMesh();
-		Vector2[] mesh_uv = mesh.uv;
+		var mesh = base.GetMesh();
+		var mesh_uv = mesh.uv;
 						
 		if (divisions>0 && fillFactor>0)
 		{
-			List<float>rfact = GradientFact();
-			float d =  (1f / divisions);			
+			var rfact = GradientFact();
+			var d =  (1f / divisions);			
 						
-			int di = 1;
-			for (int i=0; i<divisions; i++)
+			var di = 1;
+			for (var i=0; i<divisions; i++)
 			{
 				if (fillFactor< 1 && fillFactor<(i+1)*d)
 					break;
 				di++;
 			}
 						
-			Vector3[] vertices = new Vector3[1+((di+1)*rfact.Count-1)];
-			int[] triangles = new int[(di * 3)+((rfact.Count-2) * di * 6)];
+			var vertices = new Vector3[1+((di+1)*rfact.Count-1)];
+			var triangles = new int[(di * 3)+((rfact.Count-2) * di * 6)];
 			
 			vertices[0] = (Vector3)mCenter;	
-			int tri = 0;
-			for (int r=1; r<rfact.Count; r++)
+			var tri = 0;
+			for (var r=1; r<rfact.Count; r++)
 			{
-				for (int i=0; i<di; i++)
+				for (var i=0; i<di; i++)
 				{
 										
-					Vector3 v = new Vector3(0, 0.5f * rfact[r], 0);
-	            	Matrix4x4 m = new Matrix4x4();
+					var v = new Vector3(0, 0.5f * rfact[r], 0);
+	            	var m = new Matrix4x4();
 				
 	            	m.SetTRS(Vector3.zero, Quaternion.Euler(0, 0, i * d * -360), Vector3.one);
-	            	Vector3 v1 = m.MultiplyPoint3x4(v);
+	            	var v1 = m.MultiplyPoint3x4(v);
 					
-					float id = (i+1) * d;
+					var id = (i+1) * d;
 					
 	            	m.SetTRS(Vector3.zero, Quaternion.Euler(0, 0, id * -360), Vector3.one);
-	            	Vector3 v2 = m.MultiplyPoint3x4(v);
+	            	var v2 = m.MultiplyPoint3x4(v);
 					
 					if (fillFactor<id)
 					{
-						float f = (id-fillFactor)/d;																				
+						var f = (id-fillFactor)/d;																				
 		            	v2 = v2 - ((v2-v1) * f);
 					}
 					
@@ -413,7 +413,7 @@ public class OTCircleSprite : OTSprite {
 					}
 					else
 					{
-						int dd = di+1;
+						var dd = di+1;
 						vertices[i+1+(dd * (r-1))] = (Vector3)mCenter + v1;
 						vertices[i+2+(dd * (r-1))] = (Vector3)mCenter + v2;
 						

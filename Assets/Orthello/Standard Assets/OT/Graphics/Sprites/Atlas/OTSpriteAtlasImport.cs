@@ -62,19 +62,19 @@ public class OTSpriteAtlasImport : OTSpriteAtlas
 	
 	protected virtual void LocateAtlasTexture()
 	{
-		string[] imgFormats = new string[] { "png", "jpg", "jpeg", "gif", "bmp", 
+		var imgFormats = new string[] { "png", "jpg", "jpeg", "gif", "bmp", 
 			"tga", "iff", "pict" };
 				
 		if (texture!=null && texture.name == atlasDataFile.name)
 			return;		
 		
 #if UNITY_EDITOR 		
-		string basePath = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(atlasDataFile))+"/"+atlasDataFile.name;
+		var basePath = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(atlasDataFile))+"/"+atlasDataFile.name;
 		
-		for (int i=0; i< imgFormats.Length; i++)
+		for (var i=0; i< imgFormats.Length; i++)
 		{
-			string path = basePath +"."+ imgFormats[i];
-			Object o = (UnityEditor.AssetDatabase.LoadAssetAtPath(path,typeof(Texture)));		
+			var path = basePath +"."+ imgFormats[i];
+			var o = (UnityEditor.AssetDatabase.LoadAssetAtPath(path,typeof(Texture)));		
 			if (o is Texture)
 			{
 				texture = (o as Texture);
@@ -96,7 +96,7 @@ public class OTSpriteAtlasImport : OTSpriteAtlas
     protected override void Update()
     {
 		
-		bool atlasChanged = false;
+		var atlasChanged = false;
 		if (!Application.isPlaying)
 			atlasChanged = (_atlasDataFile_!=atlasDataFile || (atlasDataFile!=null && bytesDataFile!=atlasDataFile.bytes.Length));
 		

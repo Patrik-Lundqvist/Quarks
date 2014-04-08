@@ -589,7 +589,7 @@ public class OTAnimatingSprite : OTSprite
     protected override Material InitMaterial()
     {
         if (spriteContainer == null && animation != null) return null;
-        Material mat = base.InitMaterial();
+        var mat = base.InitMaterial();
         return mat;
     }
 
@@ -714,9 +714,9 @@ public class OTAnimatingSprite : OTSprite
 		{	
 			if (frTime>=frDurationDelta)
 				frTime -= frDurationDelta;
-			int idx = Mathf.FloorToInt(time/frDurationDelta);
+			var idx = Mathf.FloorToInt(time/frDurationDelta);
 			if (idx>=frames.Length) idx = 0;
-	        OTAnimation.Frame animationFrame = frames[idx];
+	        var animationFrame = frames[idx];
 			_animationFrameNumber = idx;
 			SetAnimationFrame(animationFrame);	
 	        time += (deltaTime * speed);
@@ -788,7 +788,7 @@ public class OTAnimatingSprite : OTSprite
 		
 		System.Array.Resize<OTAnimation.Frame>(ref frames,frCount);			
 		// cache the animation frames for quicker lookup
-		for (int i=0; i<frCount; i++)
+		for (var i=0; i<frCount; i++)
 			frames[i] = animation.GetFrame(i * frDurationDelta, direction, frameset);
 	}
 	
@@ -879,7 +879,7 @@ public class OTAnimatingSprite : OTSprite
 			{
 				System.Array.Resize<OTAnimation.Frame>(ref frames,frCount);			
 				// cache the animation frames for quicker lookup
-				for (int i=0; i<frCount; i++)
+				for (var i=0; i<frCount; i++)
 					frames[i] = animation.GetFrame(i * frDurationDelta, direction, frameset);
 			}			
 					

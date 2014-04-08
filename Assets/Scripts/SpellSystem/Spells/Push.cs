@@ -62,8 +62,8 @@ public class Push : Spell {
 
 		if(sprite.size.x >= spellSize)
 		{
+            caster.isInvulnerable = false;
 			EndCasting();
-			caster.isInvulnerable = false;
 		}
 
 		base.Casting();
@@ -77,12 +77,12 @@ public class Push : Spell {
 	void OnTriggerEnter(Collider other)	
 	{	
 		// Get the object name of the object which we collided with
-		string hitobject = other.gameObject.tag;
+		var hitobject = other.gameObject.tag;
 		
 		if(hitobject == "ObstacleBall")
 		{
 			// Set the direction
-			Vector3 dir = other.gameObject.transform.position - this.gameObject.transform.position;
+			var dir = other.gameObject.transform.position - this.gameObject.transform.position;
 			
 			// Normalize the direction
 			dir.Normalize();

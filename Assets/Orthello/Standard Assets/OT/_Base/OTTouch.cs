@@ -118,7 +118,7 @@ public class OTTouch {
 			{
 				if (!fingerChecks.Contains(fingers[i].fingerId))
 				{
-					OTTouchFinger finger = fingers[i];
+					var finger = fingers[i];
 					OTTouchFinger.lookup.Remove(finger.fingerId);
 					if (finger.gesture!=null)
 						finger.gesture.RemoveFinger(finger);					
@@ -130,7 +130,7 @@ public class OTTouch {
 			// update and add new fingers
 			for (i=0; i<Input.touches.Length; i++)
 			{
-				OTTouchFinger finger = OTTouchFinger.Lookup(Input.touches[i]);
+				var finger = OTTouchFinger.Lookup(Input.touches[i]);
 				if (finger==null)
 				{
 					fingers.Add(new OTTouchFinger(Input.touches[i]));
@@ -141,7 +141,7 @@ public class OTTouch {
 			}
 		}
 				
-		for (int i=0; i<fingers.Count; i++)
+		for (var i=0; i<fingers.Count; i++)
 			fingers[i].Update();
 		
 	}
@@ -152,7 +152,7 @@ public class OTTouch {
 		{
 			GetFingers();
 			// check the current gestures
-			int i=0;			
+			var i=0;			
 			while (i<gestures.Count)
 			{
 				gestures[i].Update();
@@ -206,7 +206,7 @@ public class OTTouchGesture
 	public void Begin()
 	{
 		startFingers.Clear();
-		for (int i=0; i<fingers.Count; i++)
+		for (var i=0; i<fingers.Count; i++)
 			startFingers.Add(fingers[i].Clone());
 	}
 	

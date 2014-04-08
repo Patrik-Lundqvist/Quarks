@@ -19,7 +19,7 @@ public class OTSpriteAtlasCocos2DFnt : OTSpriteAtlasImportText
     {
         if (!Parse())
             return new OTAtlasData[] { };
-		List<OTAtlasData> data = new List<OTAtlasData>();
+		var data = new List<OTAtlasData>();
 		
 		First();
 		if (Exists("info") && Exists("face"))
@@ -50,7 +50,7 @@ public class OTSpriteAtlasCocos2DFnt : OTSpriteAtlasImportText
 				
 				if (Exists ("char"))
 				{
-		                OTAtlasData ad = new OTAtlasData();
+		                var ad = new OTAtlasData();
 		
 		                ad.name = Data ("id");
 		                ad.position = new Vector2(IData("x"), IData("y"));
@@ -74,10 +74,10 @@ public class OTSpriteAtlasCocos2DFnt : OTSpriteAtlasImportText
 			return;		
 				
 #if UNITY_EDITOR 		
-		string path = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(texture))+"/"+texture.name+".fnt";
-		string tpath = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(texture))+"/"+texture.name+".txt";
-		string fpath = Path.GetFullPath(path);
-		string ftpath = Path.GetFullPath(tpath);
+		var path = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(texture))+"/"+texture.name+".fnt";
+		var tpath = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(texture))+"/"+texture.name+".txt";
+		var fpath = Path.GetFullPath(path);
+		var ftpath = Path.GetFullPath(tpath);
 		if (File.Exists(fpath))
 		{
 			File.Copy(fpath,ftpath);			

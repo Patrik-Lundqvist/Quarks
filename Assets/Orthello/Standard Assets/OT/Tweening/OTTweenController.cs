@@ -38,14 +38,14 @@ public class OTTweenController : OTController
         if(runningTweens)
         {
             //remove all tweens that are currently running
-            for(int i=0;i<tweens.Count;i++)
+            for(var i=0;i<tweens.Count;i++)
                 if(tweens[i].isRunning)
                     tweens.RemoveAt(i);
         }
         else
         {
             //remove all tweens that are currently waiting to start
-            for(int i=0;i<tweens.Count;i++)
+            for(var i=0;i<tweens.Count;i++)
                 if(tweens[i].isWaiting)
                     tweens.RemoveAt(i);
         }
@@ -55,7 +55,7 @@ public class OTTweenController : OTController
     {
         base.Update();
 
-       	int t = 0;
+       	var t = 0;
 		while (t<tweens.Count)
 		{
 			if (tweens[t].Update(deltaTime))

@@ -50,7 +50,7 @@ public class OTAtlasData
 	{
 		if (metaData == null)
 			return "";		
-		for (int k=0; k<metaData.Length; k++)
+		for (var k=0; k<metaData.Length; k++)
 		{
 			if (metaData[k].key == key)
 				return metaData[k].value;

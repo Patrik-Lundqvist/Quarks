@@ -109,7 +109,7 @@ public class OTContainer : MonoBehaviour
         }
         set
         {
-            string old = _name;
+            var old = _name;
             _name = value;
             gameObject.name = _name;
             if (OT.isValid)
@@ -162,7 +162,7 @@ public class OTContainer : MonoBehaviour
 			_defaultTexture = texture;
 		if (OT.textureResourceFolder!="")
 		{
-			Texture2D tex = OTHelper.ResourceTexture(OT.textureResourceFolder+'/'+_defaultTexture.name);
+			var tex = OTHelper.ResourceTexture(OT.textureResourceFolder+'/'+_defaultTexture.name);
 			if (tex!=null)
 				texture = tex;
 		}						
@@ -170,7 +170,7 @@ public class OTContainer : MonoBehaviour
 		{
 			if (OT.sizeFactor!=1)
 			{
-				for (int i=0; i<sizeTextures.Length; i++)
+				for (var i=0; i<sizeTextures.Length; i++)
 				{
 					if (sizeTextures[i].sizeFactor == OT.sizeFactor)
 						texture = sizeTextures[i].texture;
@@ -198,7 +198,7 @@ public class OTContainer : MonoBehaviour
     /// </summary>
     public virtual int GetFrameIndex(string inName)
     {
-		Frame frame = FrameByName(inName);
+		var frame = FrameByName(inName);
 		if (frame.name==inName || frame.name==inName.ToLower())
 			return frame.index;
 		else
@@ -209,7 +209,7 @@ public class OTContainer : MonoBehaviour
 	{
         frames = GetFrames();
 		frameByName.Clear();
-		for (int f=0; f<frames.Length; f++)
+		for (var f=0; f<frames.Length; f++)
 		{
 			frames[f].index = f;			
 			if (!frameByName.ContainsKey(frames[f].name))
@@ -218,8 +218,8 @@ public class OTContainer : MonoBehaviour
 		
 		// remove all cached materials for this container
 		OT.ClearMaterials("spc:"+name.ToLower()+":");
-		List<OTSprite> sprites = OT.ContainerSprites(this);
-		for (int s=0; s<sprites.Count; s++)
+		var sprites = OT.ContainerSprites(this);
+		for (var s=0; s<sprites.Count; s++)
 			sprites[s].GetMat();
 		
 		if (Application.isPlaying)
@@ -234,7 +234,7 @@ public class OTContainer : MonoBehaviour
 		if (!Application.isPlaying)
 		{
 			
-				UnityEditor.PropertyModification[] modifications = UnityEditor.PrefabUtility.GetPropertyModifications(this);
+				var modifications = UnityEditor.PrefabUtility.GetPropertyModifications(this);
 				if (modifications!=null && modifications.Length>0)
 					UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(this);						
 		}
@@ -348,14 +348,14 @@ public class OTContainer : MonoBehaviour
 	public void GenerateSprites()
 	{
 		generateSprites = false;
-		GameObject root = new GameObject(name);
+		var root = new GameObject(name);
 		root.transform.position = Vector3.zero;
 		root.transform.localScale = Vector3.one;
 		root.transform.rotation = Quaternion.identity;
 			
-		for (int i=0; i<frames.Length; i++)
+		for (var i=0; i<frames.Length; i++)
 		{
-			OTSprite sprite = OT.CreateSprite(OTObjectType.Sprite);
+			var sprite = OT.CreateSprite(OTObjectType.Sprite);
 			sprite.spriteContainer = this;
 			sprite.name = frames[i].name;
 			sprite.frameIndex = i;
@@ -410,8 +410,8 @@ public class OTContainer : MonoBehaviour
 	{
 		dirtyContainer = true;
 				
-		OTObject[] sprites = OT.ObjectsOfType<OTSprite>();
-		for (int i=0; i<sprites.Length; i++)
+		var sprites = OT.ObjectsOfType<OTSprite>();
+		for (var i=0; i<sprites.Length; i++)
 			sprites[i].Reset();		
 		
 		if (doUpdate)

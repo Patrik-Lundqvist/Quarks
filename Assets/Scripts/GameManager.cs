@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Linq;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -14,7 +16,7 @@ public class GameManager : MonoBehaviour {
 	public bool isGameOver = false;
 
 	// Final time
-	public float finalTime;
+	public decimal finalScore;
 
 	// Current game message
 	public string gameInfo;
@@ -26,6 +28,12 @@ public class GameManager : MonoBehaviour {
 	private Timer gameTimer;
 
 	public string highScore;
+
+    private bool highscoreResponse;
+
+    private bool highscoreResponseError;
+
+    private bool isNewHighscore;
 
 	// List of all the current obstacle balls
 	private List<GameObject> ObstacleBallList = new List<GameObject>();
@@ -142,15 +150,16 @@ public class GameManager : MonoBehaviour {
 		gameTimer.StopTimer();
 
 		// Set the final time
-		finalTime = gameTimer.CurrentTime;
+        finalScore = Truncate(gameTimer.CurrentTime,1);
 
 		// Set the game info to the current game time
 		gameInfo = "Game Over";
 
-		highScore = "New high score!";
+        HighscoreAPI.Instance.GetHighscores(1, GetHighscoreCallback);
+		
 
 		// Get the bottom wall
-		GameObject bottomWall = GameObject.FindGameObjectWithTag("BottomWall");
+		var bottomWall = GameObject.FindGameObjectWithTag("BottomWall");
 
 		// Disable the bottom walls collider so that balls can drop <( -_- <)
 		bottomWall.GetComponent<Collider>().enabled = false;
@@ -167,8 +176,58 @@ public class GameManager : MonoBehaviour {
 		ShowScore();
 	}
 
+    /// <summary>
+    /// Function called when highscore is retrived
+    /// </summary>
+    /// <param name="success"></param>
+    /// <param name="highscoreList"></param>
+    void GetHighscoreCallback(bool success, List<Highscore> highscoreList)
+    {
+        // Check if the request was successful
+        if (success)
+        {
+            if (highscoreList.Count != 0)
+            {
+                if (highscoreList.First().Score > finalScore)
+                {
+                    highscoreResponse = true;
+                    highscoreResponseError = false;
+                    highScore = "Highscore: " + highscoreList.First().Score.ToString();
+                    return;
+                }
+                
+            }
 
-	public void ShowScore()
+            isNewHighscore = true;
+            highScore = "New high score!";
+        }
+
+        // We got a response
+        highscoreResponse = true;
+        highscoreResponseError = !success;
+
+    }
+
+    /// <summary>
+    /// Function called when score is postec
+    /// </summary>
+    /// <param name="success"></param>
+    void PostHighscoreCallback(bool success)
+    {
+        if (success)
+        {
+            gameInfo = "Score submitted!";
+        }
+        else
+        {
+            gameInfo = "No connection";
+        }
+    }
+
+    /// <summary>
+    /// Start a corountine that show the scores
+    /// </summary>
+    public void ShowScore()
 	{
 		StartCoroutine(ShowScoreDelay());
 	}
@@ -178,8 +237,13 @@ public class GameManager : MonoBehaviour {
 	/// </summary>
 	void SpawnObstacleBall()
 	{
-		gameObject.GetComponent<NetworkManager>().SpawnObstacleBall();
+		// Instatiate an obstacle ball
+		var obstacleBall = gameObject.GetComponent<NetworkManager>().SpawnObstacleBall() as GameObject;
 
+		obstacleBall.GetComponent<ObstacleBall>().isLive = true;
+
+		// Add to obstacle ball list
+		AddObstacleBall(obstacleBall);
 	}
 
 	/// <summary>
@@ -213,7 +277,7 @@ public class GameManager : MonoBehaviour {
 	/// <returns>The out music.</returns>
 	public IEnumerator FadeOutMusic(){
 
-			float t = musicVolume;
+			var t = musicVolume;
 
 			while (t > 0.05f) 
 			{
@@ -240,24 +304,55 @@ public class GameManager : MonoBehaviour {
 		// Wait for a second
 		yield return new WaitForSeconds(2);
 
-
+        // Play drum sound
 		new OTSound("BassDrum");
 
+        // Show time label
 		GUIManager.Instance.showTimeTitle = true;
-
 
 		yield return new WaitForSeconds(1);
 
+        // Play snare drum sound
 		new OTSound("SnareDrum");
 
+        // Show the final score
 		GUIManager.Instance.showScore = true;
 
 		yield return new WaitForSeconds(1);
 
-		GUIManager.Instance.showHighScore = true;
+        // Wait for the highscore response
+        while (!GUIManager.Instance.showHighScore)
+	    {
+            // If we got a response
+            if (highscoreResponse)
+	        {
+                // Show the highscore
+                GUIManager.Instance.showHighScore = true;
 
-		new OTSound("HighHat");
-		new OTSound("FanFare");
+	            if (!highscoreResponseError)
+	            {
+                    new OTSound("HighHat");
+
+                    if (isNewHighscore)
+                    {
+                        new OTSound("FanFare");
+                    }
+                    else
+                    {
+                        new OTSound("Failure");
+                    }
+	            }  
+                
+	        }
+
+            yield return new WaitForSeconds(0.2f);
+	    }
+
+        // Post the highscore to the api
+        HighscoreAPI.Instance.PostHighscore(new Highscore { Name = PlayerPrefs.GetString("playerName"), Score = finalScore }, PostHighscoreCallback);
+        
+        // Set the game info label
+        gameInfo = "Submitting score ...";
 
 	}
 
@@ -271,6 +366,10 @@ public class GameManager : MonoBehaviour {
 		GUIManager.Instance.showHighScore = false;
 		GUIManager.Instance.showScore = false;
 		GUIManager.Instance.showTimeTitle = false;
+	    isNewHighscore = false;
+	    highScore = "";
+        highscoreResponse = false;
+
 
 		// Reset players current power
 		PlayerManager.Instance.powerCurrent = 0;
@@ -282,12 +381,12 @@ public class GameManager : MonoBehaviour {
 		gameTimer.Reset();
 
 		// Get the bottom wall
-		GameObject bottomWall = GameObject.FindGameObjectWithTag("BottomWall");
+		var bottomWall = GameObject.FindGameObjectWithTag("BottomWall");
 		
 		// Enable the bottom wall
 		bottomWall.GetComponent<Collider>().enabled = true;
 		
-		// Set the global gravity with a downward force
+		// Set the global gravity to 0
 		Physics.gravity = new Vector3(0, 0, 0);
 
 		RemoveObstacleBalls();
@@ -297,9 +396,12 @@ public class GameManager : MonoBehaviour {
 
 	}
 
+    /// <summary>
+    /// Remove all obstacle balls
+    /// </summary>
 	void RemoveObstacleBalls()
 	{
-		foreach(GameObject ball in ObstacleBallList)
+		foreach(var ball in ObstacleBallList)
 		{
 			Destroy(ball);
 		}
@@ -327,4 +429,15 @@ public class GameManager : MonoBehaviour {
 		StartGame();
 	}
 
+    /// <summary>
+    /// Truncate the specified value and digits. (i.e set the number of displayed decimals)
+    /// </summary>
+    /// <param name="value">Value.</param>
+    /// <param name="digits">Digits.</param>
+    public decimal Truncate(float value, int digits)
+    {
+        var mult = Math.Pow(10.0, digits);
+        var result = Math.Truncate(mult * value) / mult;
+        return (decimal)result;
+    }
 }

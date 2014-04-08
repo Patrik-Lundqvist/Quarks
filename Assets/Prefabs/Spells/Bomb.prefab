@@ -147,10 +147,10 @@ MonoBehaviour:
   status: 0
   caster: {fileID: 0}
   targets: []
-  powerCost: 1
+  powerCost: 0
   spellName: Bomb
   soundClip: PlaceBomb
-  txIcon: {fileID: 2800000, guid: 6b41930d96254f6419f155316f4decde, type: 3}
+  txIcon: {fileID: 2800000, guid: aef6958ea24831045a38d48b4ff3c37b, type: 3}
   bombTexture: {fileID: 2800000, guid: 487672c2cccfd3c42aac34c6d88c669b, type: 3}
   bombTextureBlink: {fileID: 2800000, guid: d69b72a03587cea48843a516bb3faf5c, type: 3}
   bombExplosion: {fileID: 2800000, guid: e1b3ce3eacb822c47a894607a2a2fc4c, type: 3}

@@ -61,7 +61,7 @@ public class OTFilledSprite : OTSprite
     {
 		Vector3 oldSize = size;
 
-		bool imageChanged = false;
+		var imageChanged = false;
 		if (image!=_image_)
 			imageChanged = true;
 				
@@ -111,11 +111,11 @@ public class OTFilledSprite : OTSprite
     {
         if (image != null)
         {			
-            Material mat = material;
+            var mat = material;
 			if (mat!=null)
 			{
-				Vector2  oldScale = mat.mainTextureScale;
-				Vector2  mainScale = Vector2.zero;
+				var  oldScale = mat.mainTextureScale;
+				var  mainScale = Vector2.zero;
 	            if (fillSize.Equals(Vector2.zero) || Vector2.Equals(fillSize, size))
 	                mainScale = Vector2.one;
 	            else
@@ -132,7 +132,7 @@ public class OTFilledSprite : OTSprite
     
     protected override Material InitMaterial()
     {
-        Material mat = base.InitMaterial();
+        var mat = base.InitMaterial();
         SetTexture();
         return mat;
     }
@@ -180,12 +180,12 @@ public class OTFilledSprite : OTSprite
 		// scroll background
         if (!scrollSpeed.Equals(Vector2.zero))
         {
-            Material mat = material;
-            float dx = ((1 / mat.mainTextureScale.x) * (size.x / fillSize.x / 10)) * scrollSpeed.x * Time.deltaTime;
-            float dy = ((1 / mat.mainTextureScale.y) * (size.y / fillSize.y / 10)) * scrollSpeed.y * Time.deltaTime;
+            var mat = material;
+            var dx = ((1 / mat.mainTextureScale.x) * (size.x / fillSize.x / 10)) * scrollSpeed.x * Time.deltaTime;
+            var dy = ((1 / mat.mainTextureScale.y) * (size.y / fillSize.y / 10)) * scrollSpeed.y * Time.deltaTime;
 			
-            float nx = mat.mainTextureOffset.x + dx;
-            float ny = mat.mainTextureOffset.y + dy;
+            var nx = mat.mainTextureOffset.x + dx;
+            var ny = mat.mainTextureOffset.y + dy;
             if (dx < 0 && nx < 0) nx += 1;
             if (dx > 0 && nx > 1) nx -= 1;
             if (dy < 0 && ny < 0) ny += 1;

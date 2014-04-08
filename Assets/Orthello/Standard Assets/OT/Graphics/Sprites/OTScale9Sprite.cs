@@ -52,14 +52,14 @@ public class OTScale9Sprite : OTSprite
 	int[] tris = new int[]{};
 	int Scale9Verts(int idx, float yp, float uvp)
 	{
-		int ix = 100;
+		var ix = 100;
 		if (image!=null) ix = image.width;
 				
-		float maLeft = (_meshsize_.x * ((margins.left>=1)?(margins.left/ix):margins.left)) * (ix/_size.x) * OT.view.sizeFactor;
-		float maRight = (_meshsize_.x * ((margins.right>=1)?(margins.right/ix):margins.right)) * (ix/_size.x) * OT.view.sizeFactor;
+		var maLeft = (_meshsize_.x * ((margins.left>=1)?(margins.left/ix):margins.left)) * (ix/_size.x) * OT.view.sizeFactor;
+		var maRight = (_meshsize_.x * ((margins.right>=1)?(margins.right/ix):margins.right)) * (ix/_size.x) * OT.view.sizeFactor;
 		
-		float uvLeft =  ((margins.left>=1)?(margins.left/ix):margins.left);
-		float uvRight = ((margins.right>=1)?(margins.right/ix):margins.right);
+		var uvLeft =  ((margins.left>=1)?(margins.left/ix):margins.left);
+		var uvRight = ((margins.right>=1)?(margins.right/ix):margins.right);
 		
 		_uv[idx] = new Vector2(0, uvp);
 		verts[idx++] = new Vector3(mLeft, yp, 0);
@@ -85,23 +85,23 @@ public class OTScale9Sprite : OTSprite
 		
     protected override Mesh GetMesh()
     {
-		Mesh mesh =InitMesh();
+		var mesh =InitMesh();
 				
-		int iy = 100;
+		var iy = 100;
 		if (image!=null) iy = image.height;
 		
 		
-		float maTop = (_meshsize_.y * ((margins.top>=1)?(margins.top/iy):margins.top)) * (iy/_size.y)* OT.view.sizeFactor;
-		float maBottom = (_meshsize_.y * ((margins.bottom>=1)?(margins.bottom/iy):margins.bottom)) * (iy/_size.y) * OT.view.sizeFactor;
+		var maTop = (_meshsize_.y * ((margins.top>=1)?(margins.top/iy):margins.top)) * (iy/_size.y)* OT.view.sizeFactor;
+		var maBottom = (_meshsize_.y * ((margins.bottom>=1)?(margins.bottom/iy):margins.bottom)) * (iy/_size.y) * OT.view.sizeFactor;
 
-		float uvTop =  ((margins.top>=1)?(margins.top/iy):margins.top);
-		float uvBottom = ((margins.bottom>=1)?(margins.bottom/iy):margins.bottom);
+		var uvTop =  ((margins.top>=1)?(margins.top/iy):margins.top);
+		var uvBottom = ((margins.bottom>=1)?(margins.bottom/iy):margins.bottom);
 		
 		verts = new Vector3[16];
 		_uv = new Vector2[16];
 		tris = new int[ 9 * 6 ];
 		
-		int idx = 0;
+		var idx = 0;
 		idx = Scale9Verts(idx, mTop, 1);
 		idx = Scale9Verts(idx, mTop - maTop, 1-uvTop);
 		idx = Scale9Verts(idx, mBottom + maBottom, uvBottom);
@@ -159,7 +159,7 @@ public class OTScale9Sprite : OTSprite
     {
         if (spriteContainer != null && spriteContainer.isReady)
         {
-            OTContainer.Frame frame = spriteContainer.GetFrame(frameIndex);
+            var frame = spriteContainer.GetFrame(frameIndex);
             // adjust this sprites UV coords
             if (frame.uv != null && mesh != null)
             {								

@@ -53,13 +53,13 @@ public class MouseInputInterface : MonoBehaviour {
 		if (current_x != 0 || current_y != 0)
 		{
 			// Cache the current position in a variable
-			Transform cachedTransform = transform;
+			var cachedTransform = transform;
 
 			// Move the cached position with mouse movement
-			cachedTransform.Translate(current_x * Time.deltaTime * 600f * mouseSpeed, current_y * Time.deltaTime * 600f  * mouseSpeed, 0);
+			cachedTransform.Translate(current_x * Time.deltaTime * 1200f * mouseSpeed, current_y * Time.deltaTime * 1200f  * mouseSpeed, 0);
 
 			// Get the xyz position data from the cached position
-			Vector3 v3Pos = cachedTransform.position;
+			var v3Pos = cachedTransform.position;
 
 			// Get the new postition to the ball with a constraint of the screen width and height
 			v3Pos.x = Mathf.Clamp(v3Pos.x, -screen_width +  (renderer.bounds.size.x / 2) , screen_width -  (renderer.bounds.size.x / 2));

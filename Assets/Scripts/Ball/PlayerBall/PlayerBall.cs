@@ -43,7 +43,7 @@ public abstract class PlayerBall : Ball {
 		base.OnCollisionEnter(collision);
 
 		// Get the object name of the object which we collided with
-		string hitobject = collision.gameObject.tag;
+		var hitobject = collision.gameObject.tag;
 
 		if(hitobject == "ObstacleBall")
 		{
@@ -64,7 +64,7 @@ public abstract class PlayerBall : Ball {
 	void OnTriggerEnter(Collider other)	
 	{	
 		// Get the object name of the object which we collided with
-		string hitobject = other.gameObject.tag;
+		var hitobject = other.gameObject.tag;
 
 		if(hitobject == "PowerReg")
 		{
@@ -82,7 +82,7 @@ public abstract class PlayerBall : Ball {
 	void OnTriggerExit(Collider other)
 	{
 		// Get the object name of the object which we collided with
-		string hitobject = other.gameObject.tag;
+		var hitobject = other.gameObject.tag;
 
 		if(hitobject == "PowerReg")
 		{
@@ -98,7 +98,7 @@ public abstract class PlayerBall : Ball {
 	void OnTriggerStay(Collider other)
 	{
 		// Get the object name of the object which we collided with
-		string hitobject = other.gameObject.tag;
+		var hitobject = other.gameObject.tag;
 		
 		if(hitobject == "PowerReg")
 		{
@@ -115,10 +115,10 @@ public abstract class PlayerBall : Ball {
 	void GameOver ()
 	{
 		// Find all power reg objects
-		GameObject[] obs = GameObject.FindGameObjectsWithTag("PowerReg");
+		var obs = GameObject.FindGameObjectsWithTag("PowerReg");
 
 		// Disable all the power reg sprites
-		foreach (GameObject ob in obs) {
+		foreach (var ob in obs) {
 			ob.GetComponent<SpriteRenderer>().enabled = false;
 		}
 

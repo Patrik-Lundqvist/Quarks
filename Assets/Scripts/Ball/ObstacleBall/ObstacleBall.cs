@@ -9,46 +9,46 @@ public abstract class ObstacleBall : Ball {
 	// Delegate for a delayed method
 	delegate void DelayedMethod();
 
+	// If the ball is in a live game
+	public bool isLive;
+
 	/// <summary>
 	/// Awake this instance.
 	/// </summary>
 	void Awake()
 	{
-		GameManager.Instance.AddObstacleBall(gameObject);
+		isActivated = false;
 	}
 
 	/// <summary>
 	/// Use this for initialization.
 	/// </summary>
 	public override void Start () {
-		isActivated = false;
 
-		// Wait 3 seconds and then activate the ball
-		StartCoroutine(WaitAndDo(3, ActiveBall));
+		if(isLive)
+		{
+			// Wait 3 seconds and then activate the ball
+			StartCoroutine(WaitAndDo(3, ShootBall));
+		}
+
 
 		base.Start();
 	}
+	
 
 	/// <summary>
-	/// Actives the ball.
-	/// </summary>
-	public void ActiveBall()
-	{
-		isActivated = true;
-		ShootBall();
-	}
-
-	/// <summary>
-	/// Shoots the ball at a random direction.
+	/// Activates and shoots the ball at a random direction.
 	/// </summary>
 	public void ShootBall()
 	{
+		isActivated = true;
+
 		// Randomize a random direction
-		Vector3 V = new Vector3(Random.insideUnitCircle.x,Random.insideUnitCircle.y,0);
+		var V = new Vector3(Random.insideUnitCircle.x,Random.insideUnitCircle.y,0);
 		// Normalize it (-1 to 1)
 		V.Normalize();
-		// Add the force to the random direction value
 
+		// Add the force to the random direction value
 		rigidbody.AddForce(V * speed);
 	}
 
@@ -67,6 +67,7 @@ public abstract class ObstacleBall : Ball {
 	/// Destroy event.
 	/// </summary>
 	void OnDestroy () {
-		GameManager.Instance.DeleteObstacleBall(gameObject);
+		if(isLive)
+			GameManager.Instance.DeleteObstacleBall(gameObject);
 	}
 }

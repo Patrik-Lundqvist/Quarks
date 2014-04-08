@@ -90,7 +90,7 @@ public class OTPolygonSprite : OTSprite {
 		{
 			if (points.Length!=points_.Length)
 				return true;
-			for (int i=0; i<points.Length; i++)
+			for (var i=0; i<points.Length; i++)
 			{
 				if (points[i].Equals(points_[i]))
 					return true;
@@ -138,16 +138,16 @@ public class OTPolygonSprite : OTSprite {
 				
 	Vector3[] Points(int idx)
 	{		
-		Matrix4x4 m = new Matrix4x4();
-		Vector2 ps = points[idx];
-		Vector2 pp = (idx==0)?points[points.Length-1]:points[idx-1];
-		Vector2 pn = (idx==points.Length-1)?points[0]:points[idx+1];
+		var m = new Matrix4x4();
+		var ps = points[idx];
+		var pp = (idx==0)?points[points.Length-1]:points[idx-1];
+		var pn = (idx==points.Length-1)?points[0]:points[idx+1];
 		
-		Vector2 ds = (ps-pp).normalized * (lineThickness/2);
+		var ds = (ps-pp).normalized * (lineThickness/2);
 		m.SetTRS(Vector3.zero,Quaternion.Euler(0,0,-90),Vector3.one);
 		Vector2 dsn = m.MultiplyPoint3x4(ds);
 			
-		Vector2 dn = (pn-ps).normalized * (lineThickness/2);
+		var dn = (pn-ps).normalized * (lineThickness/2);
 		m.SetTRS(Vector3.zero,Quaternion.Euler(0,0,90),Vector3.one);
 		Vector2 dnn = m.MultiplyPoint3x4(dn);
 				
@@ -167,10 +167,10 @@ public class OTPolygonSprite : OTSprite {
 		{
 			try
 			{
-				Vector2 pss = ps + dsn;
-				Vector2 pse = pss + ds;
-				Vector2 pns = ps - dnn;
-				Vector2 pne = pns + dn;
+				var pss = ps + dsn;
+				var pse = pss + ds;
+				var pns = ps - dnn;
+				var pne = pns + dn;
 
 				p1 = OTHelper.LineIntersectionPoint(pse,pss,pne,pns);
 				
@@ -200,23 +200,23 @@ public class OTPolygonSprite : OTSprite {
 	
 	protected override Mesh GetMesh ()
 	{
-		Mesh mesh = base.GetMesh();
+		var mesh = base.GetMesh();
 		if (points.Length<2)
 			return mesh;
 			
 		mesh.triangles = new int[]{};
 		
 				
-		List<Vector3> vertices = new List<Vector3>();		
+		var vertices = new List<Vector3>();		
 		
-		int wp = points.Length;
-		for (int i=0; i<wp; i++)
+		var wp = points.Length;
+		for (var i=0; i<wp; i++)
 			vertices.AddRange(Points(i));
 				
 		mesh.vertices = vertices.ToArray();		
-		int[] triangles = new int[(vertices.Count/2) * 6];
-		int idx = 0;
-		for (int i=0; i<vertices.Count/2; i++)
+		var triangles = new int[(vertices.Count/2) * 6];
+		var idx = 0;
+		for (var i=0; i<vertices.Count/2; i++)
 		{
 			if (!filled && (i*2)+1==vertices.Count-1)
 				break;

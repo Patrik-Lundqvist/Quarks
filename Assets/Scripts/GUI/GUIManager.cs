@@ -43,7 +43,10 @@ public class GUIManager : MonoBehaviour {
 	public Texture2D fullTex;
 	// END OF PROGRESS BAR
 
+    public Texture2D LoadingTexture = null;
+
 	public Texture2D againButton;
+    public Texture2D backButton;
 
 	/// <summary>
 	/// Awake this instance.
@@ -76,7 +79,7 @@ public class GUIManager : MonoBehaviour {
 	// Shows a message over the main player ball
 	public void ShowPlayerNotice(string notice)
 	{
-		GameObject tempGO = Instantiate(playerNotice, Camera.main.WorldToViewportPoint(PlayerManager.Instance.playerBall.transform.position), Quaternion.identity) as GameObject;
+		var tempGO = Instantiate(playerNotice, Camera.main.WorldToViewportPoint(PlayerManager.Instance.playerBall.transform.position), Quaternion.identity) as GameObject;
 		tempGO.GetComponent<GUIText>().text = notice;
 	}
 
@@ -127,11 +130,11 @@ public class GUIManager : MonoBehaviour {
 				// Draw the spells
 				GUI.BeginGroup(new Rect(980, 20, 270, 66 ));
 					
-					int i = 0;
-					int xpos = 0;
+					var i = 0;
+					var xpos = 0;
 
 					// Draw each spell
-					foreach(Spell spell in spellList)
+					foreach(var spell in spellList)
 					{
 						GUI.BeginGroup(new Rect(xpos, 0, 54, 66 ));
 							GUI.Label(new Rect(0,0,54,20), keys[i], GameUISkin.GetStyle("UISpellLabel"));
@@ -161,12 +164,42 @@ public class GUIManager : MonoBehaviour {
 
 			if(showScore)
 			{
-				GUI.Label(new Rect( Screen.width / 2 - 75, (Screen.height - 108) / 2 - 75, 150, 150), Truncate(GameManager.Instance.finalTime, 1).ToString(), GameUISkin.GetStyle("UIBigCenterLabel"));
+				GUI.Label(new Rect( Screen.width / 2 - 75, (Screen.height - 108) / 2 - 75, 150, 150), GameManager.Instance.finalScore.ToString(), GameUISkin.GetStyle("UIBigCenterLabel"));
+
+			    if (!showHighScore)
+			    {
+                    GUILayout.BeginArea(new Rect(Screen.width / 2, (Screen.height - 108) / 2 + 130, 50, 50));
+
+                    var matrixBackup = GUI.matrix;
+                    float thisAngle = Time.frameCount * 2;
+                    var pos = new Vector2(0, 0);
+                    GUIUtility.RotateAroundPivot(thisAngle, pos);
+                    var thisRect = new Rect(-25, -25, 50, 50);
+                    GUI.DrawTexture(thisRect, LoadingTexture);
+                    GUI.matrix = matrixBackup;
+
+                    GUILayout.EndArea();
+			    }
+
+
 			}
 
 			if(showHighScore)
 			{
 				GUI.Label(new Rect( Screen.width / 2 - 31, (Screen.height - 108) / 2 + 98, 62, 62), GameManager.Instance.highScore, GameUISkin.GetStyle("UITimeLabel"));
+
+                // Start Back button
+                GUILayout.BeginArea(new Rect(50, Screen.height - 75, 140, 38));
+
+                GUI.DrawTexture(new Rect(0, 6, 26, 32), backButton);
+
+                if (GUI.Button(new Rect(0, 0, 140, 38), "Back", GameUISkin.GetStyle("UIBackButton")))
+                {
+                    Application.LoadLevel(0);
+                }
+                    
+                GUILayout.EndArea();
+                // End Back button
 
 				if(GUI.Button(new Rect( Screen.width / 2 - 107, (Screen.height - 108) / 2 + 190, 214, 71), againButton))
 				{
@@ -185,8 +218,8 @@ public class GUIManager : MonoBehaviour {
 	/// <param name="digits">Digits.</param>
 	public float Truncate(float value, int digits)
 	{
-		double mult = Math.Pow(10.0, digits);
-		double result = Math.Truncate( mult * value ) / mult;
+		var mult = Math.Pow(10.0, digits);
+		var result = Math.Truncate( mult * value ) / mult;
 		return (float) result;
 	}
 }

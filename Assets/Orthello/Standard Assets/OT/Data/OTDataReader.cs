@@ -35,7 +35,7 @@ public class OTDataReader : Object {
 	/// </remarks>
 	public static OTDataReader Register(OTDataReader newReader)
 	{
-		string id = newReader.id;
+		var id = newReader.id;
 		
 		if (lookup.ContainsKey(id) && !keepReaders)
 			lookup[id].Close();

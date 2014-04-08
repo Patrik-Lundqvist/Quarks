@@ -70,10 +70,10 @@ public class OTSpriteSheet : OTContainer
         if (framesXY.x == 0 || framesXY.y == 0)
             return new Frame[] { };
 
-        Frame[] frames = new Frame[(int)framesXY.x * (int)framesXY.y];
+        var frames = new Frame[(int)framesXY.x * (int)framesXY.y];
 
 
-        Vector2 drop = Vector2.zero;
+        var drop = Vector2.zero;
         if (!Vector2.Equals(Vector2.zero, sheetSize) && !Vector2.Equals(Vector2.zero, frameSize))
         {
             drop = new Vector2(
@@ -81,19 +81,19 @@ public class OTSpriteSheet : OTContainer
                 (sheetSize.y - (frameSize.y * framesXY.y)) / sheetSize.y);
         }
 
-        for (int f = 0; f < frames.Length; f++)
+        for (var f = 0; f < frames.Length; f++)
         {
-            float scx = (1 - drop.x) / framesXY.x;
-            float scy = (1 - drop.y) / framesXY.y;
+            var scx = (1 - drop.x) / framesXY.x;
+            var scy = (1 - drop.y) / framesXY.y;
 
-            Frame frame = new Frame();
+            var frame = new Frame();
 
-            int tY = (int)Mathf.Floor(f / framesXY.x);
-            int tX = f - (int)(tY * framesXY.x);
+            var tY = (int)Mathf.Floor(f / framesXY.x);
+            var tX = f - (int)(tY * framesXY.x);
 
             frame.uv = new Vector2[4];
-            float sx = tX * scx;
-            float sy = drop.y + (framesXY.y - 1 - tY) * scy;
+            var sx = tX * scx;
+            var sy = drop.y + (framesXY.y - 1 - tY) * scy;
             frame.uv[0] = new Vector2(sx, sy + scy);
             frame.uv[1] = new Vector2(sx + scx, sy + scy);
             frame.uv[2] = new Vector2(sx + scx, sy);

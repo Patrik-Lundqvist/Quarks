@@ -89,7 +89,7 @@ public abstract class Ball : MonoBehaviour {
 	/// <summary>
 	/// Disables the ball.
 	/// </summary>
-	public void DisableBall(){
+	public virtual void DisableBall(){
 
 		// Stop the ball
 		StopBall();
@@ -97,8 +97,10 @@ public abstract class Ball : MonoBehaviour {
 		// Change the material
 		renderer.material = ballMaterialDeActived;
 
-		// Disable all collisions
-		rigidbody.detectCollisions = false;
+		// Disable physical collisions
+		collider.isTrigger = true;
+
+
 
 		// Move the ball back a bit
 		rigidbody.position = new Vector3(rigidbody.position.x,rigidbody.position.y,8f);
@@ -107,7 +109,7 @@ public abstract class Ball : MonoBehaviour {
 	/// <summary>
 	/// Activates the ball.
 	/// </summary>
-	public void ActivateBall(){
+	public virtual void ActivateBall(){
 
 		// Make the ball move again
 		StartBall();
@@ -115,8 +117,8 @@ public abstract class Ball : MonoBehaviour {
 		// Change the material
 		renderer.material = ballMaterial;
 
-		// Activate all collision detectors
-		rigidbody.detectCollisions = true;
+		// Activate physical collisions
+		collider.isTrigger = false;
 
 		// Move the ball back to the correct level
 		rigidbody.position = new Vector3(rigidbody.position.x,rigidbody.position.y,0f);
@@ -155,10 +157,10 @@ public abstract class Ball : MonoBehaviour {
 		if(collision.gameObject.tag == "ObstacleBall")
 		{
 			// The offset
-			float audioClipOffset = 445.0f;
+			var audioClipOffset = 445.0f;
 
 			// Get the velocity and apply offset
-			float p = collision.relativeVelocity.magnitude / audioClipOffset;
+			var p = collision.relativeVelocity.magnitude / audioClipOffset;
 
 			// Play audio clip
 			new OTSound("BallHit").Pitch(Mathf.Clamp( p, 0.5f, 1.1f)).Volume(Mathf.Clamp( p, 0.2f, 1.5f));

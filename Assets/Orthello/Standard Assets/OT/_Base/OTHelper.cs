@@ -12,7 +12,7 @@ public class OTHelper {
 	/// </summary>
 	public static Transform[] ChildrenOrderedByName(Transform parent)
 	{
-		List<Transform> res = new List<Transform>();
+		var res = new List<Transform>();
 		if (parent!=null && parent.childCount>0)
 			foreach(Transform child in parent.transform)
 				res.Add(child);
@@ -20,8 +20,8 @@ public class OTHelper {
 		if (res.Count>0)
 			res.Sort(delegate(Transform a , Transform b)
 			{
-				string sa = a.name.Replace("-","_").ToLower();
-				string sb = b.name.Replace("-","_").ToLower();
+				var sa = a.name.Replace("-","_").ToLower();
+				var sb = b.name.Replace("-","_").ToLower();
 				return string.Compare(sa, sb);
 			});
 				
@@ -53,9 +53,9 @@ public class OTHelper {
 	/// </summary>
 	public static Bounds RectToBounds(Rect r, int depthSize)
 	{
-		bool td = OT.world == OT.World.WorldTopDown2D;
-		Vector3 center = new Vector3(r.center.x, td?0:r.center.y, td?r.center.y:0);
-		Vector3 size = new Vector3(Mathf.Abs(r.width), td?depthSize:Mathf.Abs(r.height), td?Mathf.Abs(r.height):depthSize);			
+		var td = OT.world == OT.World.WorldTopDown2D;
+		var center = new Vector3(r.center.x, td?0:r.center.y, td?r.center.y:0);
+		var size = new Vector3(Mathf.Abs(r.width), td?depthSize:Mathf.Abs(r.height), td?Mathf.Abs(r.height):depthSize);			
 		return new Bounds(center, size);		
 	}
 
@@ -83,7 +83,7 @@ public class OTHelper {
 	/// </summary>
 	public static Texture2D ResourceTexture(string filename)
 	{
-		Texture2D tex = Resources.Load(filename, typeof(Texture2D)) as Texture2D;
+		var tex = Resources.Load(filename, typeof(Texture2D)) as Texture2D;
 		return  tex;
 	}
 	/// <summary>
@@ -91,7 +91,7 @@ public class OTHelper {
 	/// </summary>
 	public static OTXMLDataReader ResourceXML(string filename)
 	{
-		TextAsset txt = Resources.Load(filename, typeof(TextAsset)) as TextAsset;
+		var txt = Resources.Load(filename, typeof(TextAsset)) as TextAsset;
 		if (txt!=null)
 		{
 			try
@@ -127,11 +127,11 @@ public class OTHelper {
 	/// <returns>
 	public static Vector2 StringVector2(string vector2)
 	{
-		string v = vector2;
+		var v = vector2;
 		if (vector2.IndexOf("(")==0)
 			v = v.Substring(1, v.Length-2);
 			
-		string[] va = v.Split(',');
+		var va = v.Split(',');
 		if (va.Length == 2)
 			return new Vector2((float)System.Convert.ToDouble(va[0]),(float)System.Convert.ToDouble(va[1]));
 		
@@ -144,11 +144,11 @@ public class OTHelper {
 	/// <returns>
 	public static Vector3 StringVector3(string vector3)
 	{
-		string v = vector3;
+		var v = vector3;
 		if (vector3.IndexOf("(")==0)
 			v = v.Substring(1, v.Length-2);
 			
-		string[] va = v.Split(',');
+		var va = v.Split(',');
 		if (va.Length == 3)
 			return new Vector3((float)System.Convert.ToDouble(va[0]),(float)System.Convert.ToDouble(va[1]), (float)System.Convert.ToDouble(va[2]));
 		
@@ -168,15 +168,15 @@ public class OTHelper {
 	/// </remarks>
 	public static Vector2 LineIntersectionPoint(Vector2 ps1, Vector2 pe1, Vector2 ps2, Vector2 pe2)
 	{
-		float A1 = pe1.y-ps1.y; 
-		float B1 = ps1.x-pe1.x; 
-		float C1 = A1*ps1.x+B1*ps1.y;
+		var A1 = pe1.y-ps1.y; 
+		var B1 = ps1.x-pe1.x; 
+		var C1 = A1*ps1.x+B1*ps1.y;
 		
-		float A2 = pe2.y-ps2.y; 
-		float B2 = ps2.x-pe2.x; 
-		float C2 = A2*ps2.x+B2*ps2.y;
+		var A2 = pe2.y-ps2.y; 
+		var B2 = ps2.x-pe2.x; 
+		var C2 = A2*ps2.x+B2*ps2.y;
 		
-		float delta = A1*B2 - A2*B1;
+		var delta = A1*B2 - A2*B1;
 		
 		if(delta == 0) 
     		throw new System.Exception("Lines are parallel");

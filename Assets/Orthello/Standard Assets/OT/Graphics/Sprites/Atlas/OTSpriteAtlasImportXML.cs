@@ -15,8 +15,8 @@ public class OTSpriteAtlasImportXML : OTSpriteAtlasImport
 			return;		
 				
 #if UNITY_EDITOR 		
-		string path = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(texture))+"/"+texture.name+".xml";
-		Object o = (UnityEditor.AssetDatabase.LoadAssetAtPath(path,typeof(TextAsset)));
+		var path = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(texture))+"/"+texture.name+".xml";
+		var o = (UnityEditor.AssetDatabase.LoadAssetAtPath(path,typeof(TextAsset)));
 		if (o is TextAsset)
 			_atlasDataFile = (o as TextAsset);
 #endif

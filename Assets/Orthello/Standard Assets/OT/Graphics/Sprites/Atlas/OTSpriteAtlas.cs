@@ -48,7 +48,7 @@ public class OTSpriteAtlas : OTContainer
     {
         if (texture == null) return new Frame[] { };
 
-        Vector2 texSize = sheetSize;
+        var texSize = sheetSize;
         if (Vector2.Equals(texSize, Vector2.zero) && texture != null)
             texSize = new Vector2(texture.width, texture.height);
 
@@ -58,14 +58,14 @@ public class OTSpriteAtlas : OTContainer
         if (atlasReady && atlasData.Length > 0)
         {
             // convert atlasData to frames
-            Frame[] frames = new Frame[atlasData.Length];
+            var frames = new Frame[atlasData.Length];
 			
 			dataByName.Clear();
 			
-            for (int a = 0; a < atlasData.Length; a++)
+            for (var a = 0; a < atlasData.Length; a++)
             {
-                OTAtlasData data = atlasData[a];
-                Frame frame = new Frame();
+                var data = atlasData[a];
+                var frame = new Frame();
                 frame.name = data.name;
 				
 				if (!dataByName.ContainsKey(data.name))
@@ -81,10 +81,10 @@ public class OTSpriteAtlas : OTContainer
                     frame.offset = Vector2.zero;
                     frame.size = data.frameSize;
 
-                    Vector2 vOffset = new Vector2(data.offset.x / frame.size.x, data.offset.y / frame.size.y);
-                    Vector2 vSize = new Vector2(data.size.x / frame.size.x, data.size.y / frame.size.y);
+                    var vOffset = new Vector2(data.offset.x / frame.size.x, data.offset.y / frame.size.y);
+                    var vSize = new Vector2(data.size.x / frame.size.x, data.size.y / frame.size.y);
 
-                    Vector3 tl = new Vector3(((1f / 2f) * -1)  + vOffset.x, (1f / 2f) - vOffset.y, 0);
+                    var tl = new Vector3(((1f / 2f) * -1)  + vOffset.x, (1f / 2f) - vOffset.y, 0);
                     frame.vertices = new Vector3[] { 
                         tl,
                         tl + new Vector3(vSize.x,0,0),
@@ -96,10 +96,10 @@ public class OTSpriteAtlas : OTContainer
                 frame.imageSize = data.frameSize;
 
                 frame.uv = new Vector2[4];
-                float sx = data.position.x / texSize.x;
-                float sy = 1 - ((data.position.y + data.size.y) / texSize.y);
-                float scx = data.size.x / texSize.x;
-                float scy = data.size.y / texSize.y;
+                var sx = data.position.x / texSize.x;
+                var sy = 1 - ((data.position.y + data.size.y) / texSize.y);
+                var scx = data.size.x / texSize.x;
+                var scy = data.size.y / texSize.y;
                 if (data.rotated)
                 {
                     sy = 1 - ((data.position.y + data.size.x) / texSize.y);
@@ -163,7 +163,7 @@ public class OTSpriteAtlas : OTContainer
 	{
 		if (metaData == null)
 			return "";		
-		for (int k=0; k<metaData.Length; k++)
+		for (var k=0; k<metaData.Length; k++)
 		{
 			if (metaData[k].key == key)
 				return metaData[k].value;

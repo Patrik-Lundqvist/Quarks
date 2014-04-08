@@ -19,13 +19,13 @@ public class OTSpriteAtlasSparrow : OTSpriteAtlasImportXML
         if (!ValidXML())
             return new OTAtlasData[] { };
 
-        List<OTAtlasData> data = new List<OTAtlasData>();
+        var data = new List<OTAtlasData>();
         if (xml.rootName == "TextureAtlas")
         {
-            OTDataset dsTextures = xml.Dataset("SubTexture");
+            var dsTextures = xml.Dataset("SubTexture");
             while (!dsTextures.EOF)
             {
-                OTAtlasData ad = new OTAtlasData();
+                var ad = new OTAtlasData();
 
                 ad.name = dsTextures.AsString("name");
                 ad.position = new Vector2(dsTextures.AsInt("x"), dsTextures.AsInt("y"));

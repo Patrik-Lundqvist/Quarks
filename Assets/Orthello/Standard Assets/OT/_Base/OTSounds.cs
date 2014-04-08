@@ -38,7 +38,7 @@ public class OTSounds : MonoBehaviour {
 		{
 			if (soundClips!=null)
 			{
-				for (int i=0; i<soundClips.Length; i++)
+				for (var i=0; i<soundClips.Length; i++)
 				{
 					soundClips[i].Load();
 					if (!lookup.ContainsKey(soundClips[i].name.ToLower()))						
@@ -54,15 +54,15 @@ public class OTSounds : MonoBehaviour {
 		if (volume>1) volume = 1;
 		if (Application.isPlaying)
 		{		
-			float vol = (mute)?0:volume;
+			var vol = (mute)?0:volume;
 			if (vol!=AudioListener.volume)
 				AudioListener.volume = vol;			
 		}	
 							
-		int s = 0;
+		var s = 0;
 		while (s<sounds.Count)
 		{
-			OTSound sound = sounds[s];	
+			var sound = sounds[s];	
 			if (!sound.ready)
 				continue;
 						
@@ -236,7 +236,7 @@ public class OTSound
 	/// </summary>
 	public static OTSound RandomSound(string[] sounds)
 	{
-		int s = Random.Range(0,sounds.Length);
+		var s = Random.Range(0,sounds.Length);
 		return new OTSound(sounds[s]);		
 	}
 		
@@ -251,7 +251,7 @@ public class OTSound
 		
 		if (soundClip == null)
 		{
-			AudioClip audio = Resources.Load("sounds/"+_name, typeof(AudioClip)) as AudioClip;
+			var audio = Resources.Load("sounds/"+_name, typeof(AudioClip)) as AudioClip;
 			if (audio==null) audio = Resources.Load("Sounds/"+_name, typeof(AudioClip)) as AudioClip;
 			if (audio!=null)
 			{
@@ -368,7 +368,7 @@ public class OTSound
 	/// </summary>
 	OTSound Clone()
 	{
-		OTSound s = new OTSound(_name);
+		var s = new OTSound(_name);
 		s.Count(_count);
 		s.Pan(_pan);
 		s.Pitch(_pitch);
@@ -391,7 +391,7 @@ public class OTSound
 	{
 		if (clone)
 		{
-			OTSound s = Clone();
+			var s = Clone();
 			s.Play(false);
 			return s;
 		}
@@ -534,7 +534,7 @@ public class OTSoundClip
 	{
 		if (url!="")
 		{
- 			WWW wwwRequest = new WWW(url);
+ 			var wwwRequest = new WWW(url);
         	clip = wwwRequest.GetAudioClip(false,true);
 		}
 	}

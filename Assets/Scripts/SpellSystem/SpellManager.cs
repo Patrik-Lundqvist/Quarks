@@ -27,9 +27,9 @@ public class SpellManager : MonoBehaviour {
 	
 	public List<Spell> GetSpells()
 	{
-		List<Spell> spellList = new List<Spell>();
+		var spellList = new List<Spell>();
 
-		foreach(GameObject spellPrefab in SpellPrefabList)
+		foreach(var spellPrefab in SpellPrefabList)
 		{
 			spellList.Add(spellPrefab.gameObject.GetComponent<Spell>());
 		}
@@ -61,9 +61,9 @@ public class SpellManager : MonoBehaviour {
 		}
 
 		// Get the casters player ball
-		PlayerBall playerBallScript = PlayerManager.Instance.playerBall.GetComponent<PlayerBall>();
+		var playerBallScript = PlayerManager.Instance.playerBall.GetComponent<PlayerBall>();
 		
-		Spell spellToCast = spell.gameObject.GetComponent<Spell>();
+		var spellToCast = spell.gameObject.GetComponent<Spell>();
 
 		// Check if we have enough power for the spell
 		if(PlayerManager.Instance.powerCurrent < spellToCast.powerCost)
@@ -75,7 +75,7 @@ public class SpellManager : MonoBehaviour {
 		// Remove the the power for the player
 		PlayerManager.Instance.powerCurrent -= spellToCast.powerCost;
 
-		Spell SpellInstance = (Instantiate(spell, playerBallScript.gameObject.transform.position, Quaternion.identity) as GameObject).GetComponent<Spell>();
+		var SpellInstance = (Instantiate(spell, playerBallScript.gameObject.transform.position, Quaternion.identity) as GameObject).GetComponent<Spell>();
 
 		// Setup the spell
 		SpellInstance.Setup(playerBallScript);

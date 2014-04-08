@@ -110,7 +110,7 @@ public abstract class Spell : MonoBehaviour {
 		Colliders = Physics.OverlapSphere(caster.gameObject.transform.position, Radius);
 
 		// For every hit, add the target to the list
-		foreach (Collider hit in Colliders) {
+		foreach (var hit in Colliders) {
 
 			// Check if the target is an obstacle ball
 			if (hit && hit.tag == "ObstacleBall"){

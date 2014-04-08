@@ -62,9 +62,9 @@ public class OTController {
     
     protected bool CallBack(string handler, object[] param)
     {
-        for (int t = 0; t < callBackTargets.Count; t++)
+        for (var t = 0; t < callBackTargets.Count; t++)
         {
-            MethodInfo mi = callBackTargets[t].GetType().GetMethod(handler);
+            var mi = callBackTargets[t].GetType().GetMethod(handler);
             if (mi != null)
             {
                 mi.Invoke(callBackTargets[t], param);

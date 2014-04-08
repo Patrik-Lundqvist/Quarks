@@ -208,12 +208,12 @@ public class OTGridSprite : OTSprite {
 	
 	Vector3[] VLine(int h)
 	{
-		float wi = gridXY.x * cellXY.x;
-		float hg = gridXY.y * cellXY.y;
+		var wi = gridXY.x * cellXY.x;
+		var hg = gridXY.y * cellXY.y;
 		wi += lineThickness;
 		hg += lineThickness;
-		float sx = (-wi/2);
-		float sy = (-hg/2);
+		var sx = (-wi/2);
+		var sy = (-hg/2);
 		
 		sx+= h * cellXY.x;
 		
@@ -229,12 +229,12 @@ public class OTGridSprite : OTSprite {
 
 	Vector3[] HLine(int v)
 	{
-		float wi = gridXY.x * cellXY.x;
-		float hg = gridXY.y * cellXY.y;
+		var wi = gridXY.x * cellXY.x;
+		var hg = gridXY.y * cellXY.y;
 		wi += lineThickness;
 		hg += lineThickness;
-		float sx = (-wi/2);
-		float sy = (-hg/2);
+		var sx = (-wi/2);
+		var sy = (-hg/2);
 		
 		sy += v * cellXY.y;
 		
@@ -250,12 +250,12 @@ public class OTGridSprite : OTSprite {
 	
 	protected override Mesh GetMesh ()
 	{
-		Mesh mesh = base.GetMesh();
+		var mesh = base.GetMesh();
 			
 		mesh.triangles = new int[]{};
 		
-		List<Vector3> vertices = new List<Vector3>();
-		for (int x=0; x<gridXY.x; x++)
+		var vertices = new List<Vector3>();
+		for (var x=0; x<gridXY.x; x++)
 		{
 			if (x>0 && innerVertical)
 				vertices.AddRange(VLine(x));
@@ -267,7 +267,7 @@ public class OTGridSprite : OTSprite {
 			  vertices.AddRange(VLine(gridXY.x));
 		}
 		
-		for (int y=0; y<gridXY.y; y++)
+		for (var y=0; y<gridXY.y; y++)
 		{
 			if (y>0 && innerHorizontal)
 				vertices.AddRange(HLine(y));
@@ -281,9 +281,9 @@ public class OTGridSprite : OTSprite {
 		
 		mesh.vertices = vertices.ToArray();
 		
-		int[] triangles = new int[(vertices.Count/4) * 6];
-		int idx = 0;
-		for (int i=0; i< vertices.Count/4; i++)
+		var triangles = new int[(vertices.Count/4) * 6];
+		var idx = 0;
+		for (var i=0; i< vertices.Count/4; i++)
 		{
 			triangles[idx++] = (i*4);
 			triangles[idx++] = (i*4)+1;

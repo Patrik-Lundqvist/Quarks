@@ -123,13 +123,13 @@ public class OTClippingAreaSprite : OTSprite {
 			
 			if (!clipped && clipLayer>0)
 			{
-				Rect clipRect = worldRect;
+				var clipRect = worldRect;
 				clipRect.xMin += clipMargin;
 				clipRect.yMin += clipMargin;
 				clipRect.width -= clipMargin;
 				clipRect.height -= clipMargin;							
 
-				GameObject[]  excludes = new GameObject[]{ };
+				var  excludes = new GameObject[]{ };
 				if (clipMargin>0)
 					excludes = new GameObject[]{ gameObject };
 									
@@ -145,7 +145,7 @@ public class OTClippingAreaSprite : OTSprite {
 			{
 				if (!worldRect.Equals(lastRect))
 				{
-					Rect clipRect = worldRect;
+					var clipRect = worldRect;
 					clipRect.xMin += clipMargin;
 					clipRect.yMin += clipMargin;
 					clipRect.width -= clipMargin;

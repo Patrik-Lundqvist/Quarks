@@ -48,14 +48,14 @@ public class TextFadeInOut : MonoBehaviour
 	{
 		if (fadeIn)
 		{
-			float a = guiText.font.material.color.a;
+			var a = guiText.font.material.color.a;
 			a = (timeLeft / fadeDuration * 0.1f);
 			if (a > 1) { a = 1; }
 			guiText.font.material.color = new Color(origRed, origGreen, origBlue, 1-a);
 		}
 		else
 		{
-			float a = guiText.font.material.color.a;
+			var a = guiText.font.material.color.a;
 			a = timeLeft / (-fadeDuration);
 			if (a < 0) { a = 0; }
 			guiText.font.material.color = new Color(origRed, origGreen, origBlue, 1-a);

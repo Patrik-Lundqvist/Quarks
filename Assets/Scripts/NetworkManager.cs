@@ -35,7 +35,7 @@ public class NetworkManager : MonoBehaviour {
 	{
 
 		// Instantiate the main player ball
-		GameObject playerBall = Instantiate(defaultPlayerBallPrefab, RandomPostition(), Quaternion.identity) as GameObject;
+		var playerBall = Instantiate(defaultPlayerBallPrefab, RandomPostition(), Quaternion.identity) as GameObject;
 
 		// Add the mouse input script to the ball
 		playerBall.AddComponent("MouseInputInterface");
@@ -49,7 +49,7 @@ public class NetworkManager : MonoBehaviour {
 	public GameObject SpawnObstacleBall()
 	{
 		// Instantiate the obstacle ball at a random position
-		GameObject obstacleBall = Instantiate(defaultObstacleBallPrefab,  RandomPostition(), Quaternion.identity) as GameObject;
+		var obstacleBall = Instantiate(defaultObstacleBallPrefab,  RandomPostition(), Quaternion.identity) as GameObject;
 
 		// Set the tag
 		obstacleBall.tag = "ObstacleBall";

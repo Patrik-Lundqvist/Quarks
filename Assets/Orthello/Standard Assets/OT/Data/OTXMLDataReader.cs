@@ -96,7 +96,7 @@ public class OTXMLDataReader : OTTextDataReader {
 	
 	object DatasetElement(object dataset)
 	{
-		OTDataset ds = (OTDataset)dataset;
+		var ds = (OTDataset)dataset;
 		if (ds.data!=null && !ds.EOF)
 		{
 			#if (UNITY_METRO || UNITY_WP8) && !UNITY_EDITOR
@@ -136,7 +136,7 @@ public class OTXMLDataReader : OTTextDataReader {
 	
 	void InitElement(ref object element)
 	{
-		string el = "";
+		var el = "";
 		InitElement(ref element, ref el);
 	}	
 	
@@ -206,7 +206,7 @@ public class OTXMLDataReader : OTTextDataReader {
 	
 	public string Value(object element)
 	{
-		string _v = "";
+		var _v = "";
 		InitElement(ref element);
 		#if (UNITY_METRO || UNITY_WP8) && !UNITY_EDITOR
 		if (element is XElement)
@@ -338,7 +338,7 @@ public class OTXMLDataReader : OTTextDataReader {
 		InitElement(ref element);
 		if (element is XmlNode)
 		{
-			XmlNode el = (element as XmlNode).SelectSingleNode(elementName+"[text()=\""+value+"\"]");
+			var el = (element as XmlNode).SelectSingleNode(elementName+"[text()=\""+value+"\"]");
 			return el;
 		}
 		#endif
@@ -365,7 +365,7 @@ public class OTXMLDataReader : OTTextDataReader {
 		InitElement(ref element);
 		if (element is XmlNode)
 		{
-			XmlNode el = (element as XmlNode).SelectSingleNode(elementName+"["+XPathLower(propName)+"='"+value.ToLower()+"']");
+			var el = (element as XmlNode).SelectSingleNode(elementName+"["+XPathLower(propName)+"='"+value.ToLower()+"']");
 			return el;
 		}
 		#endif
@@ -383,7 +383,7 @@ public class OTXMLDataReader : OTTextDataReader {
 			{
 				if (pdata is OTDataset)
 				{
-					OTDataset dsData = (pdata as OTDataset);
+					var dsData = (pdata as OTDataset);
 					if (dsData.data == null || dsData.EOF)
 						return null;
 					else
@@ -403,18 +403,18 @@ public class OTXMLDataReader : OTTextDataReader {
 		#if (UNITY_METRO || UNITY_WP8) && !UNITY_EDITOR
 		List<XElement> rowNodes = (List<XElement>)dsData;
 		#else
-		XmlNodeList rowNodes = (XmlNodeList)dsData;
+		var rowNodes = (XmlNodeList)dsData;
 		#endif
 		return rowNodes.Count;
 	}	
 	
 	void RemoveDOCTYPE()
 	{
-		int p = text.IndexOf("<!DOCTYPE ");
-		int e = p;
+		var p = text.IndexOf("<!DOCTYPE ");
+		var e = p;
 		if (p>=0)
 		{
-			for (int i=p; i<text.Length; i++)
+			for (var i=p; i<text.Length; i++)
 				if (text[i]=='>')
 			{
 				e = i+2;
@@ -422,7 +422,7 @@ public class OTXMLDataReader : OTTextDataReader {
 			}
 			if (e>p)
 			{
-				string tmp = text;
+				var tmp = text;
 				_text = tmp.Substring(0,p);
 				_text += tmp.Substring(e, tmp.Length-e);
 			}
@@ -439,7 +439,7 @@ public class OTXMLDataReader : OTTextDataReader {
 			List<XElement> rowNodes = (List<XElement>)dsData;
 			return rowNodes[row];
 			#else
-			XmlNodeList rowNodes = (XmlNodeList)dsData;
+			var rowNodes = (XmlNodeList)dsData;
 			return rowNodes[row];
 			#endif
 		}
@@ -466,13 +466,13 @@ public class OTXMLDataReader : OTTextDataReader {
 		if (lNode!=null)
 			return lNode.Value;
 		#else
-		XmlNodeList rowNodes = (XmlNodeList)dsData;
-		XmlNode dataNode = rowNodes[row];
+		var rowNodes = (XmlNodeList)dsData;
+		var dataNode = rowNodes[row];
 		// check if variable is an attribute of the row node
 		if (dataNode.Attributes[variable]!=null)
 			return dataNode.Attributes[variable].Value;
 		// check if variable is a childnode
-		XmlNode lNode = dataNode.SelectSingleNode(variable);
+		var lNode = dataNode.SelectSingleNode(variable);
 		if (lNode!=null)
 			return lNode.InnerText;
 		#endif

@@ -16,13 +16,13 @@ public class OTSpriteAtlasOGRE : OTSpriteAtlasImportXML
         if (!ValidXML())
             return new OTAtlasData[] { };
 
-        List<OTAtlasData> data = new List<OTAtlasData>();
+        var data = new List<OTAtlasData>();
         if (xml.rootName == "Imageset")
         {
-            OTDataset dsTextures = xml.Dataset("Image");
+            var dsTextures = xml.Dataset("Image");
 			while(!dsTextures.EOF)
 			{
-                OTAtlasData ad = new OTAtlasData();
+                var ad = new OTAtlasData();
 
                 ad.name = dsTextures.AsString("Name");
                 ad.position = new Vector2(dsTextures.AsInt("XPos"), dsTextures.AsInt("YPos"));

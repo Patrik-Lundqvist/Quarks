@@ -74,14 +74,14 @@ public class OTAnimationFrameset
     {
         get
         {
-            int totalFrames = frameCount;
+            var totalFrames = frameCount;
 
             if ((container == null) || (totalFrames == 0))
             {
                 return new int[] { };
             }
 
-            int[] frames = new int[totalFrames];
+            var frames = new int[totalFrames];
             int start, end, direction;
 			
 			if (frameNameMask!="" && container!=null)
@@ -98,10 +98,10 @@ public class OTAnimationFrameset
 					regex = null;
 				}
 				
-				List<string> names = new List<string>();
-				for (int f=0; f<container.frameCount; f++)
+				var names = new List<string>();
+				for (var f=0; f<container.frameCount; f++)
 				{
-					OTContainer.Frame fr = container.GetFrame(f);	
+					var fr = container.GetFrame(f);	
 					try
 					{
 						if ((regex!=null && regex.Match(fr.name).Success) || (fr.name.ToLower().StartsWith(frameNameMask.ToLower())))
@@ -129,15 +129,15 @@ public class OTAnimationFrameset
                 end = (startFrame <= endFrame) ? endFrame : startFrame;
                 direction = (startFrame <= endFrame) ? 1 : -1;
             }
-            int numFrames = (end - start) + 1;
+            var numFrames = (end - start) + 1;
 
             // Calculate a single play's worth of frames (this includes a ping pong)
-            int frameIndex = 0;
+            var frameIndex = 0;
 			
 			if (frames.Length<numFrames)
 				System.Array.Resize<int>(ref frames,numFrames);
 			
-            for (int i = 0; i < numFrames; ++i)
+            for (var i = 0; i < numFrames; ++i)
             {				
                 if (frameNames != null && frameNames.Length>0)
                     frames[i] = container.GetFrameIndex(frameNames[frameIndex]);
@@ -159,7 +159,7 @@ public class OTAnimationFrameset
             // Now repeat that array copy for playCount times
 			if (playCount>1 && playCount<=10)
 			{				
-	            for (int i = 1; i < playCount; i++)
+	            for (var i = 1; i < playCount; i++)
 	                System.Array.Copy(frames, 0, frames, i * numFrames, numFrames);
 			}
 			else
@@ -202,7 +202,7 @@ public class OTAnimationFrameset
     {
         get
         {
-            int c = baseFrameCount;
+            var c = baseFrameCount;
             if ((c > 2) && pingPong)
             {
                 c *= 2;

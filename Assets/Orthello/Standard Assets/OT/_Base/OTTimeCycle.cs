@@ -73,8 +73,8 @@ public class OTTimeCycle
 
         if (parts.Length > 0)
         {
-            OTTimeCyclePart part = parts[currentPart];
-            float pTime = time - currentStart;
+            var part = parts[currentPart];
+            var pTime = time - currentStart;
             if (pTime > part.length)
             {
                 currentStart += part.length;
@@ -87,7 +87,7 @@ public class OTTimeCycle
 
             // OT.print("time = " + time + " , ptime = " + pTime + " part = " + currentPart);
 
-            float partPosition = parts[currentPart].ease.ease(pTime, 0, 1, part.length);
+            var partPosition = parts[currentPart].ease.ease(pTime, 0, 1, part.length);
             if (onUpdatePart != null)
                 onUpdatePart(this, part.name, partPosition);
 

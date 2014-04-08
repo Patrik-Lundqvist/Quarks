@@ -91,7 +91,7 @@ public class OTAnimation : MonoBehaviour
         }
         set
         {
-            string old = _name;
+            var old = _name;
             _name = value;
             gameObject.name = _name;
             if (OT.isValid)
@@ -135,7 +135,7 @@ public class OTAnimation : MonoBehaviour
     public OTAnimationFrameset GetFrameset(string pName)
     {
         if (pName == "") return null;
-        for (int f = 0; f < framesets.Length; f++)
+        for (var f = 0; f < framesets.Length; f++)
         {
             if (framesets[f].name.ToLower() == pName.ToLower())
                 return framesets[f];
@@ -185,8 +185,8 @@ public class OTAnimation : MonoBehaviour
 
     int GetIndex(float time, int direction, OTAnimationFrameset frameset)
     {
-        int index = 0;
-        int fc = GetFrameCount(frameset);
+        var index = 0;
+        var fc = GetFrameCount(frameset);
         index = (int)Mathf.Floor((float)fc * (time / GetDuration(frameset)));
         while (index > fc - 1) index -= fc;
         if (direction == -1) index = fc - 1 - index;
@@ -225,7 +225,7 @@ public class OTAnimation : MonoBehaviour
 		if (!Application.isPlaying)
 		{
 			
-				UnityEditor.PropertyModification[] modifications = UnityEditor.PrefabUtility.GetPropertyModifications(this);
+				var modifications = UnityEditor.PrefabUtility.GetPropertyModifications(this);
 				if (modifications!=null && modifications.Length>0)
 					UnityEditor.PrefabUtility.RecordPrefabInstancePropertyModifications(this);						
 		}
@@ -257,21 +257,21 @@ public class OTAnimation : MonoBehaviour
     
     protected Frame[] GetFrames()
     {
-        List<Frame> frames = new List<Frame>();
+        var frames = new List<Frame>();
         if (framesets.Length > 0)
         {
-            int index = 0;
-            for (int f = 0; f < framesets.Length; f++)
+            var index = 0;
+            for (var f = 0; f < framesets.Length; f++)
             {
-                OTAnimationFrameset fs = framesets[f];
+                var fs = framesets[f];
                 fs.startIndex = index;
                 index += fs.frameCount;
 
-                int[] framesetFrames = fs.frameNumbers;
+                var framesetFrames = fs.frameNumbers;
 
-                foreach (int frameIndex in framesetFrames)
+                foreach (var frameIndex in framesetFrames)
                 {
-                    Frame curFrame = new Frame();
+                    var curFrame = new Frame();
                     curFrame.container = fs.container;
                     curFrame.frameIndex = frameIndex;
                     frames.Add(curFrame);
@@ -309,9 +309,9 @@ public class OTAnimation : MonoBehaviour
         if (!isReady)
         {
             _isReady = true;
-            for (int f = 0; f < framesets.Length; f++)
+            for (var f = 0; f < framesets.Length; f++)
             {
-                OTAnimationFrameset fs = framesets[f];
+                var fs = framesets[f];
                 if (fs.container != null)
 				{
 					if (fs.container.texture == null)
@@ -339,10 +339,10 @@ public class OTAnimation : MonoBehaviour
                 dirtyAnimation = true;
             }
 
-            int _frameCount = 0;
-            for (int f = 0; f < framesets.Length; f++)
+            var _frameCount = 0;
+            for (var f = 0; f < framesets.Length; f++)
             {
-                OTAnimationFrameset fs = framesets[f];
+                var fs = framesets[f];
                 if (fs.container != null)
                 {
                     if (f <= _framesets.Count - 1)
@@ -423,13 +423,13 @@ public class OTAnimation : MonoBehaviour
         if (dirtyAnimation)
         {
 						
-			bool isOk = true;
-            for (int f = 0; f < framesets.Length; f++)
+			var isOk = true;
+            for (var f = 0; f < framesets.Length; f++)
             {
-                OTAnimationFrameset fs = framesets[f];
+                var fs = framesets[f];
 				if (fs.container == null && fs._containerName!="")
 				{
-					OTContainer c = OT.ContainerByName(fs._containerName);
+					var c = OT.ContainerByName(fs._containerName);
 					if (c!=null && c.isReady) 
 						fs.container = c;					
 					else

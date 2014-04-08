@@ -20,11 +20,11 @@ public class OTSpriteAtlasBMFontXml : OTSpriteAtlasImportXML
         if (!ValidXML())
             return new OTAtlasData[] { };
 				
-        List<OTAtlasData> data = new List<OTAtlasData>();
+        var data = new List<OTAtlasData>();
 		
         if (xml.rootName == "font")
         {
-			OTDataset dsInfo = xml.Dataset("info");
+			var dsInfo = xml.Dataset("info");
 			if (!dsInfo.EOF)
 			{
 				if (dsInfo.AsString("face")!="")
@@ -39,10 +39,10 @@ public class OTSpriteAtlasBMFontXml : OTSpriteAtlasImportXML
 					}
 								
 					metaType = "FONT";
-					OTDataset dsChars = xml.Dataset("chars");
+					var dsChars = xml.Dataset("chars");
 					while (!dsChars.EOF)
 					{
-	                	OTAtlasData ad = new OTAtlasData();
+	                	var ad = new OTAtlasData();
 			
 			            ad.name = ""+dsChars.AsInt("id");
 			            ad.position = new Vector2(dsChars.AsInt("x"), dsChars.AsInt("y"));
@@ -65,10 +65,10 @@ public class OTSpriteAtlasBMFontXml : OTSpriteAtlasImportXML
 		
 		if (_atlasDataFile==null)
 		{		
-			string path = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(texture))+"/"+texture.name+".fnt";
-			string tpath = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(texture))+"/"+texture.name+".xml";
-			string fpath = Path.GetFullPath(path);
-			string ftpath = Path.GetFullPath(tpath);
+			var path = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(texture))+"/"+texture.name+".fnt";
+			var tpath = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(texture))+"/"+texture.name+".xml";
+			var fpath = Path.GetFullPath(path);
+			var ftpath = Path.GetFullPath(tpath);
 			if (File.Exists(fpath))
 			{
 				File.Copy(fpath,ftpath);			

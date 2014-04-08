@@ -118,7 +118,7 @@ public class OTClipSprite : OTSprite {
 	{
 		if (mesh!=null && mesh.uv.Length>0)
 		{
-			bool rotated = false;
+			var rotated = false;
 	        if (spriteContainer != null && spriteContainer.isReady && spriteContainer is OTSpriteAtlas)
 	        {	
 				if (frameIndex<(spriteContainer as OTSpriteAtlas).atlasData.Length)
@@ -131,10 +131,10 @@ public class OTClipSprite : OTSprite {
 			else
 				uvRect = new Rect(mesh.uv[3].x,mesh.uv[3].y,mesh.uv[1].x - mesh.uv[3].x, mesh.uv[1].y - mesh.uv[3].y);				
 							
-			float _mLeft = uvRect.xMin + (clipRect.xMin * uvRect.width);
-			float _mRight = _mLeft + (clipRect.width * uvRect.width);
-			float _mBottom = uvRect.yMin + (clipRect.yMin * uvRect.height);
-			float _mTop = _mBottom + (clipRect.height * uvRect.height);
+			var _mLeft = uvRect.xMin + (clipRect.xMin * uvRect.width);
+			var _mRight = _mLeft + (clipRect.width * uvRect.width);
+			var _mBottom = uvRect.yMin + (clipRect.yMin * uvRect.height);
+			var _mTop = _mBottom + (clipRect.height * uvRect.height);
 																
 			if (clipFactor>0)
 			{
@@ -169,12 +169,12 @@ public class OTClipSprite : OTSprite {
 	
 	void FactorClip(ref float _mTop, ref float _mLeft, ref float _mBottom, ref float _mRight)
 	{
-		float mw = (_mRight-_mLeft);
-		float fw = mw * clipFactor;
-		float dw = mw - fw;
-		float mh = (_mTop-_mBottom);
-		float fh = mh * clipFactor;
-		float dh = mh - fh;
+		var mw = (_mRight-_mLeft);
+		var fw = mw * clipFactor;
+		var dw = mw - fw;
+		var mh = (_mTop-_mBottom);
+		var fh = mh * clipFactor;
+		var dh = mh - fh;
 		
 		switch(pivot)
 		{
@@ -216,14 +216,14 @@ public class OTClipSprite : OTSprite {
 	
 	protected override Mesh GetMesh ()
 	{
-		Mesh mesh = base.GetMesh();
+		var mesh = base.GetMesh();
 				
 		if (clipRect.width>0 && clipRect.height>0 && clipFactor>0)
 		{
-			float _mLeft = mLeft + clipRect.xMin;
-			float _mRight = _mLeft + clipRect.width;
-			float _mBottom = mBottom + clipRect.yMin;
-			float _mTop = _mBottom + clipRect.height;
+			var _mLeft = mLeft + clipRect.xMin;
+			var _mRight = _mLeft + clipRect.width;
+			var _mBottom = mBottom + clipRect.yMin;
+			var _mTop = _mBottom + clipRect.height;
 
 			
 			if (clipFactor<1)

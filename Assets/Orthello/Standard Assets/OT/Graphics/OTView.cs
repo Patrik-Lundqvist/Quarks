@@ -218,7 +218,7 @@ public class OTView : MonoBehaviour
     {
         get
         {
-			Vector3 wp = camera.ScreenToWorldPoint(Input.mousePosition);
+			var wp = camera.ScreenToWorldPoint(Input.mousePosition);
             return ((OT.world == OT.World.WorldSide2D)?(Vector2)wp:new Vector2(wp.x,wp.z));
         }
     }
@@ -320,8 +320,8 @@ public class OTView : MonoBehaviour
                     return (float)Screen.height / 2f;
                 else
 				{
-					float arDef = pixelPerfectResolution.x/pixelPerfectResolution.y;
-					float arCur = (float)Screen.width/(float)Screen.height;					
+					var arDef = pixelPerfectResolution.x/pixelPerfectResolution.y;
+					var arCur = (float)Screen.width/(float)Screen.height;					
 					if (arCur < arDef)
                        return (float)Screen.height / 2f * (pixelPerfectResolution.x / (float)Screen.width);
 					else
@@ -345,10 +345,10 @@ public class OTView : MonoBehaviour
 			if (!camera.orthographic)
             	camera.orthographic = true;
 			CheckViewSize();
-			if (camera.near!=0)
-            	camera.near = 0;
-			if (camera.far!= cameraRange)				
-            	camera.far = cameraRange;				
+			if (camera.nearClipPlane!=0)
+            	camera.nearClipPlane = 0;
+			if (camera.farClipPlane!= cameraRange)				
+            	camera.farClipPlane = cameraRange;				
 			if (OT.world == OT.World.WorldSide2D)
 			{
 				cameraDepth = -1000;
@@ -417,7 +417,7 @@ public class OTView : MonoBehaviour
 			return;
 		}
 		
-		Vector3 vs = camera.ScreenToWorldPoint(new Vector2(0, 0));
+		var vs = camera.ScreenToWorldPoint(new Vector2(0, 0));
 		if (OT.world == OT.World.WorldSide2D)
         	p1 = vs;
 		else
@@ -460,7 +460,7 @@ public class OTView : MonoBehaviour
         tr = new Vector2(x2, y2);
 
         // Vector2 br = camera.ViewportToWorldPoint(new Vector2(1, 1));
-        Vector2 si = new Vector2(tr.x - bl.x, tr.y - bl.y);
+        var si = new Vector2(tr.x - bl.x, tr.y - bl.y);
         _worldRect = new Rect(
             camera.transform.position.x - si.x / 2,
             ((OT.world == OT.World.WorldSide2D)?camera.transform.position.y:camera.transform.position.z) - si.y / 2,
@@ -472,15 +472,15 @@ public class OTView : MonoBehaviour
 	{
         if (worldBounds.width != 0)
         {
-        	Vector2 pos = position;				
-            bool clampX = (Mathf.Abs(worldBounds.width) >= Mathf.Abs(worldRect.width));
+        	var pos = position;				
+            var clampX = (Mathf.Abs(worldBounds.width) >= Mathf.Abs(worldRect.width));
             if (clampX)
             {
-                float minX = _worldBounds.xMin;
-                float maxX = _worldBounds.xMax;
+                var minX = _worldBounds.xMin;
+                var maxX = _worldBounds.xMax;
                 if (maxX < minX)
                 {
-                    float tmp = minX;
+                    var tmp = minX;
                     minX = maxX;
                     maxX = tmp; 
                 }
@@ -492,15 +492,15 @@ public class OTView : MonoBehaviour
                 pos.x = (worldRect.xMin + worldRect.width / 2);
 
 
-            bool clampY = (Mathf.Abs(worldBounds.height) >= Mathf.Abs(worldRect.height));
+            var clampY = (Mathf.Abs(worldBounds.height) >= Mathf.Abs(worldRect.height));
             if (clampY)
             {
-                float minY = _worldBounds.yMin;
-                float maxY = _worldBounds.yMax;
+                var minY = _worldBounds.yMin;
+                var maxY = _worldBounds.yMax;
 
                 if (maxY < minY)
                 {
-                    float tmp = minY;
+                    var tmp = minY;
                     minY = maxY;
                     maxY = tmp;
                 }
@@ -523,7 +523,7 @@ public class OTView : MonoBehaviour
 			return;
 				
         // aspect ration check - because it sometimes is forced back to 4:3 ???
-        float asp = (float)Screen.width / (float)Screen.height;
+        var asp = (float)Screen.width / (float)Screen.height;
         if (asp!=camera.aspect) return;
 		
 		if (!Application.isPlaying)
@@ -641,7 +641,7 @@ public class OTView : MonoBehaviour
 	
 	void UpdateWorldRect()
 	{
-		Vector2 dv = position - _worldRect.center;		
+		var dv = position - _worldRect.center;		
 		_worldRect.center = position;		
 		p1 += dv;
 		p2 += dv;
@@ -840,14 +840,14 @@ public class OTView : MonoBehaviour
         if (drawGizmos)
         {
             DrawRect(worldBounds, Darker(gizmosColor));
-            Rect r = worldRect;
+            var r = worldRect;
 			
 			if (OT.world == OT.World.WorldSide2D)
 			{
-		        Vector3 gp1 = new Vector3(p1.x, p1.y, 900);
-		        Vector3 gp2 = new Vector3(p2.x, p2.y, 900);
-		        Vector3 gp3 = new Vector3(p3.x, p3.y, 900);
-		        Vector3 gp4 = new Vector3(p4.x, p4.y, 900);
+		        var gp1 = new Vector3(p1.x, p1.y, 900);
+		        var gp2 = new Vector3(p2.x, p2.y, 900);
+		        var gp3 = new Vector3(p3.x, p3.y, 900);
+		        var gp4 = new Vector3(p4.x, p4.y, 900);
 												
 	            DrawView(gp1, gp2, gp3, gp4, Darker(gizmosColor));
 					
@@ -860,10 +860,10 @@ public class OTView : MonoBehaviour
 			}
 			else
 			{
-		        Vector3 gp1 = new Vector3(p1.x, -900, p1.y);
-		        Vector3 gp2 = new Vector3(p2.x, -900, p2.y);
-		        Vector3 gp3 = new Vector3(p3.x, -900, p3.y);
-		        Vector3 gp4 = new Vector3(p4.x, -900, p4.y);
+		        var gp1 = new Vector3(p1.x, -900, p1.y);
+		        var gp2 = new Vector3(p2.x, -900, p2.y);
+		        var gp3 = new Vector3(p3.x, -900, p3.y);
+		        var gp4 = new Vector3(p4.x, -900, p4.y);
 				
 	            DrawView(gp1, gp2, gp3, gp4, Darker(gizmosColor));
 					

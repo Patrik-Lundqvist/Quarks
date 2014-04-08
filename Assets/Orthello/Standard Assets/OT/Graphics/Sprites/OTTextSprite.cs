@@ -39,14 +39,14 @@ public class OTTextSprite : OTSprite
 
 	string GetDY()
 	{
-		OTSpriteAtlas atlas = (spriteContainer as OTSpriteAtlas);	
+		var atlas = (spriteContainer as OTSpriteAtlas);	
 		if (atlas == null) return  "";
-		string dy = atlas.GetMeta("dy");
+		var dy = atlas.GetMeta("dy");
 		if (dy=="")
 		{
 			if (atlas.atlasData.Length>0)
 			{
-				OTAtlasData d = atlas.DataByName(""+((byte)'J'));
+				var d = atlas.DataByName(""+((byte)'J'));
 				if (d==null)
 					d = atlas.DataByName("J");
 				if (d==null)
@@ -58,7 +58,7 @@ public class OTTextSprite : OTSprite
 				dy = "50";
 		}
 		
-		float idy = (float)System.Convert.ToDouble(dy);
+		var idy = (float)System.Convert.ToDouble(dy);
 		idy *= lineHeightModifier;
 		idy = Mathf.Round(idy);
 		
@@ -72,12 +72,12 @@ public class OTTextSprite : OTSprite
 		if (text == "")
 			return transform.position;		
 		
-		Rect r = worldRect;
-		Vector2 p = new Vector2(r.xMin, r.yMin + r.height/2);
+		var r = worldRect;
+		var p = new Vector2(r.xMin, r.yMin + r.height/2);
 		
-		int px = 0;
-		int tx = 0;
-		for (int i=0; i<sizeChars.Length; i++)
+		var px = 0;
+		var tx = 0;
+		for (var i=0; i<sizeChars.Length; i++)
 		{
 			if (i<sizeChars.Length && i<pos.x)
 				px+=(sizeChars[i]);
@@ -96,31 +96,31 @@ public class OTTextSprite : OTSprite
 	void ParseText()
 	{
 		_bytesLines = GetBytes();
-		char[] chars = text.ToCharArray();
+		var chars = text.ToCharArray();
 		if (textFile!=null)
 			chars = textFile.text.ToCharArray();
 
-		for (int p=0; p<_parsed.Count; p++)		
+		for (var p=0; p<_parsed.Count; p++)		
 			_parsed[p].Clean();		
 		_parsed.Clear();
 		
 		
 		int dy = System.Convert.ToUInt16(GetDY());
-		int yPosition = 0;
-		OTSpriteAtlas atlas = (spriteContainer as OTSpriteAtlas);		
+		var yPosition = 0;
+		var atlas = (spriteContainer as OTSpriteAtlas);		
 						
 		
-		OTAtlasData data = atlas.atlasData[0];
+		var data = atlas.atlasData[0];
 		if (data!=null && data.frameSize.y>0 && lineHeight == 0)
 			lineHeight = (int)data.frameSize.y;
 				
 		
 		sizeChars = new int[]{};
 		System.Array.Resize<int>(ref sizeChars, chars.Length);
-		int ci = 0;
+		var ci = 0;
 				
-		OTTextAlinea alinea = new OTTextAlinea(yPosition, lineHeight);		
-		foreach(char c in chars) {
+		var alinea = new OTTextAlinea(yPosition, lineHeight);		
+		foreach(var c in chars) {
 								
 			if (c=='\r') 
 			{
@@ -137,11 +137,11 @@ public class OTTextSprite : OTSprite
 				continue;
 			}			
 			data = atlas.DataByName(""+c);
-			OTContainer.Frame frame = atlas.FrameByName(""+c);		
+			var frame = atlas.FrameByName(""+c);		
 			
 			if (data==null || frame.name=="")
 			{
-				string charName = ((int)c).ToString();
+				var charName = ((int)c).ToString();
 				data = atlas.DataByName(charName);
 				frame = atlas.FrameByName(charName);			
 			}
@@ -154,7 +154,7 @@ public class OTTextSprite : OTSprite
 						
 			if (data==null || frame.name=="")
 			{
-				byte b = System.Text.Encoding.UTF8.GetBytes("?")[0];
+				var b = System.Text.Encoding.UTF8.GetBytes("?")[0];
 				data = atlas.DataByName(""+b);
 				frame = atlas.FrameByName(""+b);			
 			}
@@ -172,7 +172,7 @@ public class OTTextSprite : OTSprite
 			{
 				if (data.name!="32")
 				{					
-					Vector3[] verts = new Vector3[] { 
+					var verts = new Vector3[] { 
 						new Vector3(frame.offset.x, -frame.offset.y,0),
 						new Vector3(frame.offset.x+frame.size.x, -frame.offset.y,0),
 						new Vector3(frame.offset.x+frame.size.x, -frame.offset.y-frame.size.y,0),
@@ -184,8 +184,8 @@ public class OTTextSprite : OTSprite
 				   alinea.NextWord(data);
 				
 				
-				string dx = data.GetMeta("dx");
-				int width = 0;
+				var dx = data.GetMeta("dx");
+				var width = 0;
 				if (dx=="")
 					width = (int)(data.offset.x + data.size.x);
 				else
@@ -200,10 +200,10 @@ public class OTTextSprite : OTSprite
 		_parsed.Add(alinea);												
 		
 		if (wordWrap > 0)
-			for (int p=0; p<_parsed.Count; p++)
+			for (var p=0; p<_parsed.Count; p++)
 			{
 				_parsed[p].WordWrap(wordWrap, dy);				
-				for (int pp = p+1; pp<_parsed.Count; pp++)
+				for (var pp = p+1; pp<_parsed.Count; pp++)
 					_parsed[pp].lines[0].yPosition -= (dy * (_parsed[p].lines.Count-1));
 			}
 		
@@ -220,7 +220,7 @@ public class OTTextSprite : OTSprite
 		_uv = new Vector2[] {};
 		tris = new int[] {};
 				
-		Mesh mesh = InitMesh();
+		var mesh = InitMesh();
 
 		mesh.vertices = verts;
         mesh.uv = _uv;		
@@ -230,28 +230,28 @@ public class OTTextSprite : OTSprite
         mesh.RecalculateNormals();
 								
 		// calculate maximum width
-		int wi = 0;
-		for (int p = 0; p<_parsed.Count; p++)
-			for (int l=0; l<_parsed[p].lines.Count; l++)
+		var wi = 0;
+		for (var p = 0; p<_parsed.Count; p++)
+			for (var l=0; l<_parsed[p].lines.Count; l++)
 				if (_parsed[p].lines[l].width>wi)
 						wi = _parsed[p].lines[l].width;
 		
 		
-		for (int p = 0; p<_parsed.Count; p++)
+		for (var p = 0; p<_parsed.Count; p++)
 		{
-			for (int l=0; l<_parsed[p].lines.Count; l++)
+			for (var l=0; l<_parsed[p].lines.Count; l++)
 			{
-				Vector3[] lineVerts = _parsed[p].lines[l].GetVerts(wi,pivotPoint, (l==_parsed[p].lines.Count-1)?false:justify);
-				Vector2[] lineUV = _parsed[p].lines[l].uv;
+				var lineVerts = _parsed[p].lines[l].GetVerts(wi,pivotPoint, (l==_parsed[p].lines.Count-1)?false:justify);
+				var lineUV = _parsed[p].lines[l].uv;
 
-				int vIdx = verts.Length;
-				int uIdx = _uv.Length;
-				int tIdx = tris.Length;
+				var vIdx = verts.Length;
+				var uIdx = _uv.Length;
+				var tIdx = tris.Length;
 			
 				System.Array.Resize<Vector3>(ref verts, verts.Length + lineVerts.Length);
 				lineVerts.CopyTo(verts,vIdx);
 				System.Array.Resize<int>(ref tris, tris.Length + (6 * (_parsed[p].lines[l].charCount+1)));
-				for (int tr = 0; tr<= _parsed[p].lines[l].charCount; tr++)
+				for (var tr = 0; tr<= _parsed[p].lines[l].charCount; tr++)
 				{
 					new int[] {
 						vIdx, vIdx+1, vIdx+2,
@@ -285,7 +285,7 @@ public class OTTextSprite : OTSprite
 		
 		if (otCollider!=null && otCollider is BoxCollider)
 		{
-			BoxCollider b = (otCollider as BoxCollider);
+			var b = (otCollider as BoxCollider);
 			b.center = mesh.bounds.center;
 			b.size = mesh.bounds.extents*2;
 		}
@@ -421,7 +421,7 @@ class OTTextAlinea
 	
 	public void Clean()
 	{
-		for (int l=0; l<lines.Count; l++)
+		for (var l=0; l<lines.Count; l++)
 			lines[l].Clean();
 		lines.Clear();
 	}
@@ -444,8 +444,8 @@ class OTTextAlinea
 	
 	public void WordWrap(int wrapWidth, int dy)
 	{
-		List<OTTextLine> _lines = new List<OTTextLine>();
-		for (int l=0; l<lines.Count; l++)
+		var _lines = new List<OTTextLine>();
+		for (var l=0; l<lines.Count; l++)
 			_lines.AddRange(lines[l].WordWrap(wrapWidth, dy));		
 		
 		if (_lines.Count>1)
@@ -467,8 +467,8 @@ class OTTextLine
 	{
 		get
 		{
-			string res = "";
-			for (int w=0; w<words.Count; w++)
+			var res = "";
+			for (var w=0; w<words.Count; w++)
 			{
 				res += words[w].text;
 				if (w<words.Count-1)
@@ -482,15 +482,15 @@ class OTTextLine
 	{
 		get
 		{
-			Vector2[] _uv = new Vector2[]{
+			var _uv = new Vector2[]{
 				new Vector2(0,0),
 				new Vector2(0,0),
 				new Vector2(0,0),
 				new Vector2(0,0)
 			};
-			for (int w=0; w<words.Count; w++)
+			for (var w=0; w<words.Count; w++)
 			{
-				Vector2[] wUV = words[w].uv;
+				var wUV = words[w].uv;
 				System.Array.Resize<Vector2>(ref _uv, _uv.Length + wUV.Length);
 				wUV.CopyTo(_uv, _uv.Length - wUV.Length);
 			}
@@ -500,7 +500,7 @@ class OTTextLine
 
 	public Vector3[] GetVerts(int maxWidth, Vector2 pivot, bool justify)
 	{
-		int tt = 0;		
+		var tt = 0;		
 		float twx = 0;
 		float spacing = 0;
 		if (words.Count>1)
@@ -508,22 +508,22 @@ class OTTextLine
 		if (maxWidth>0 && !justify)
 			twx = (float)(maxWidth - width) * (pivot.x + 0.5f);
 				
-		Vector3[] _verts = 	new Vector3[] { 
+		var _verts = 	new Vector3[] { 
 			new Vector3(0,0,0),
 			new Vector3(1,0,0),
 			new Vector3(1,-lineHeight,0),
 			new Vector3(0,-lineHeight,0)					
 		};		
 		
-		for (int w=0; w<words.Count; w++)
+		for (var w=0; w<words.Count; w++)
 		{
-			Vector3[] wVerts = words[w].verts;
+			var wVerts = words[w].verts;
 	
 			if (tt>0 || twx > 0 || yPosition!=0)
 			{
-				Matrix4x4 mx = new Matrix4x4();
+				var mx = new Matrix4x4();
 				mx.SetTRS(new Vector3(tt+twx,yPosition,0), Quaternion.identity, Vector3.one);
-				for (int i=0; i<wVerts.Length; i++)
+				for (var i=0; i<wVerts.Length; i++)
 					wVerts[i] = mx.MultiplyPoint3x4(wVerts[i]);
 			}
 
@@ -543,7 +543,7 @@ class OTTextLine
 	{
 		width = 0;
 		charCount = 0;
-		for (int w=0; w<words.Count; w++)
+		for (var w=0; w<words.Count; w++)
 			words[w].Clean();
 		words.Clear();
 	}
@@ -577,7 +577,7 @@ class OTTextLine
 			word.End(null);		
 		width = 0;
 		charCount = 0;
-		for (int i=0; i<words.Count; i++)
+		for (var i=0; i<words.Count; i++)
 		{
 			width += (words[i].width + words[i].space);
 			charCount += words[i].atlasData.Count;
@@ -591,13 +591,13 @@ class OTTextLine
 	
 	public List<OTTextLine> WordWrap(int wrapWidth, int dy)
 	{				
-		List<OTTextLine> wLines = new List<OTTextLine>();
+		var wLines = new List<OTTextLine>();
 		if (words.Count>0)
 		{
-			OTTextLine line = new OTTextLine(yPosition, false, lineHeight);
+			var line = new OTTextLine(yPosition, false, lineHeight);
 			wLines.Add(line);
-			int ww = 0; int yp = yPosition;
-			for (int w=0; w<words.Count; w++)
+			var ww = 0; var yp = yPosition;
+			for (var w=0; w<words.Count; w++)
 			{
 				line.words.Add(words[w]);
 				if (w < words.Count-1)
@@ -645,8 +645,8 @@ class OTTextWord
 	{
 		text+=c;
 		
-		int tx = 0;
-		string dx = data.GetMeta("dx");
+		var tx = 0;
+		var dx = data.GetMeta("dx");
 		if (dx=="")
 			tx = (int)(data.offset.x + data.size.x);
 		else
@@ -654,13 +654,13 @@ class OTTextWord
 		txList.Add(tx);
 		atlasData.Add(data);
 		
-		int tt = 0;
-		for (int i=0; i<txList.Count-1; i++)
+		var tt = 0;
+		for (var i=0; i<txList.Count-1; i++)
 			tt+=txList[i];
 		
-		Matrix4x4 mx = new Matrix4x4();
+		var mx = new Matrix4x4();
 		mx.SetTRS(new Vector3(tt,0,0), Quaternion.identity, Vector3.one);
-		for (int i=0; i<verts.Length; i++)
+		for (var i=0; i<verts.Length; i++)
 			verts[i] = mx.MultiplyPoint3x4(verts[i]);
 	
 		System.Array.Resize<Vector3>(ref this.verts, this.verts.Length + verts.Length);
@@ -672,9 +672,9 @@ class OTTextWord
 	public void End(OTAtlasData space)
 	{
 		width = 0;
-		string dx = "";
+		var dx = "";
 				
-		for (int i=0; i<atlasData.Count; i++)
+		for (var i=0; i<atlasData.Count; i++)
 		{
 			dx = atlasData[i].GetMeta("dx");
 			if (dx=="")

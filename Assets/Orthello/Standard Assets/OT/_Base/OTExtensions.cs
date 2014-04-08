@@ -15,7 +15,7 @@ public static class OTExtensions  {
 		if (g.collider!=null)
 		{
 			RaycastHit h;
-			bool found = g.collider.Raycast(r, out h, distance);
+			var found = g.collider.Raycast(r, out h, distance);
 			hit = h;
 			return found;
 		}
@@ -25,8 +25,8 @@ public static class OTExtensions  {
 		else
 		if (g.collider2D!=null)
 		{
-			RaycastHit2D[] allHits = Physics2D.RaycastAll(r.origin, r.direction);
-			foreach(RaycastHit2D hit2D in allHits)
+			var allHits = Physics2D.RaycastAll(r.origin, r.direction);
+			foreach(var hit2D in allHits)
 			{
 				if (hit2D.collider == g.collider2D)
 				{

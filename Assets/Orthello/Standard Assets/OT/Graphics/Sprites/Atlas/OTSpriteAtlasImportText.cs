@@ -15,16 +15,16 @@ public class OTSpriteAtlasImportText : OTSpriteAtlasImport
     /// </summary>
 	Dictionary<string,string> ParseLine(string line, Dictionary<string,string> lineData)
 	{
-		bool inKey = false;
-		bool inVal = false;
-		string key = "";
-		string val = "";
-		string valStart = "";
+		var inKey = false;
+		var inVal = false;
+		var key = "";
+		var val = "";
+		var valStart = "";
 		
-		int i=0;
+		var i=0;
 		while (i<line.Length)
 		{
-			string c = line.Substring(i,1);
+			var c = line.Substring(i,1);
 			
 			if (!inKey)
 			{
@@ -83,8 +83,8 @@ public class OTSpriteAtlasImportText : OTSpriteAtlasImport
 			return;		
 		
 #if UNITY_EDITOR 		
-		string path = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(texture))+"/"+texture.name+".txt";
-		Object o = (UnityEditor.AssetDatabase.LoadAssetAtPath(path,typeof(TextAsset)));
+		var path = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(texture))+"/"+texture.name+".txt";
+		var o = (UnityEditor.AssetDatabase.LoadAssetAtPath(path,typeof(TextAsset)));
 		if (o == null)
 		{
 			path = Path.GetDirectoryName(UnityEditor.AssetDatabase.GetAssetPath(texture))+"/"+texture.name+".xml";
@@ -145,7 +145,7 @@ public class OTSpriteAtlasImportText : OTSpriteAtlasImport
     protected bool Parse()
     {
 		lines.Clear();
-		string[] _lines = new string[]{};
+		var _lines = new string[]{};
 		if (atlasDataFile.text.IndexOf("\r\n")>=0)
 			_lines = atlasDataFile.text.Split(new char[] { '\r', '\n' },  System.StringSplitOptions.None);
 		else
@@ -154,7 +154,7 @@ public class OTSpriteAtlasImportText : OTSpriteAtlasImport
 
 		if (_lines.Length>0)
 		{
-			for (int i=0; i<_lines.Length; i++)
+			for (var i=0; i<_lines.Length; i++)
 				lines.Add(ParseLine(_lines[i], new Dictionary<string, string>()) );
 				
 			return true;

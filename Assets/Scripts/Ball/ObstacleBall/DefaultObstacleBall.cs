@@ -11,9 +11,6 @@ public class DefaultObstacleBall : ObstacleBall {
 	/// </summary>
 	public override void Start () {
 
-		// Sets the ball speed
-		speed = 15000;
-
 		base.Start();
 	}
 	
@@ -22,5 +19,23 @@ public class DefaultObstacleBall : ObstacleBall {
 	/// </summary>
 	public override void Update () {
 		base.Update();
+	}
+
+
+	public override void ActivateBall () {
+
+		// Enable power reg
+		transform.FindChild("PowerReg").collider.enabled = true;
+		
+		base.ActivateBall();
+	}
+
+	
+	public override void DisableBall () {
+
+		// Disable power reg
+		transform.FindChild("PowerReg").collider.enabled = false;
+
+		base.DisableBall();
 	}
 }

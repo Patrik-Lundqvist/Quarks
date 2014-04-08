@@ -311,7 +311,7 @@ public class OTTween
     {
         if (target != null)
         {
-            FieldInfo field = target.GetType().GetField(name);
+            var field = target.GetType().GetField(name);
             if (field != null)
             {
                 fromValues.Add(field.GetValue(target));
@@ -320,7 +320,7 @@ public class OTTween
             }
             else
             {
-                PropertyInfo prop = target.GetType().GetProperty(name);
+                var prop = target.GetType().GetProperty(name);
                 if (prop != null)
                 {
                     fromValues.Add(prop.GetValue(target, null));
@@ -344,7 +344,7 @@ public class OTTween
         object value = null;
         if (toValue == null || fromValue == null) return;
 		
-		float dur = duration;
+		var dur = duration;
 		if (pingPong) dur/=2;
 		
         switch (fromValue.GetType().Name.ToLower())
@@ -367,9 +367,9 @@ public class OTTween
                 value = (int)easing.ease(time, (int)fromValue, (int)toValue - (int)fromValue, dur);
                 break;			
             case "vector2":
-                Vector2 _toValue2 = (Vector2)toValue;
-                Vector2 _fromValue2 = (Vector2)fromValue;
-                Vector2 _value2 = Vector2.zero;
+                var _toValue2 = (Vector2)toValue;
+                var _fromValue2 = (Vector2)fromValue;
+                var _value2 = Vector2.zero;
 
                 if ((_toValue2 - _fromValue2).x != 0)
                     _value2.x = easing.ease(time, _fromValue2.x, (_toValue2 - _fromValue2).x, dur);
@@ -384,9 +384,9 @@ public class OTTween
                 value = _value2;
                 break;
             case "vector3":
-                Vector3 _toValue3 = (Vector3)toValue;
-                Vector3 _fromValue3 = (Vector3)fromValue;
-                Vector3 _value3 = Vector3.zero;
+                var _toValue3 = (Vector3)toValue;
+                var _fromValue3 = (Vector3)fromValue;
+                var _value3 = Vector3.zero;
 
                 if ((_toValue3 - _fromValue3).x != 0)
                     _value3.x = easing.ease(time, _fromValue3.x, (_toValue3 - _fromValue3).x, dur);
@@ -407,13 +407,13 @@ public class OTTween
                 value = _value3;
                 break;
             case "color":
-                Color _toColor = (Color)toValue;
-                Color _fromColor = (Color)fromValue;
+                var _toColor = (Color)toValue;
+                var _fromColor = (Color)fromValue;
 
-                float r = easing.ease(time, _fromColor.r, _toColor.r - _fromColor.r, dur);
-                float g = easing.ease(time, _fromColor.g, _toColor.g - _fromColor.g, dur);
-                float b = easing.ease(time, _fromColor.b, _toColor.b - _fromColor.b, dur);
-                float a = easing.ease(time, _fromColor.a, _toColor.a - _fromColor.a, dur);
+                var r = easing.ease(time, _fromColor.r, _toColor.r - _fromColor.r, dur);
+                var g = easing.ease(time, _fromColor.g, _toColor.g - _fromColor.g, dur);
+                var b = easing.ease(time, _fromColor.b, _toColor.b - _fromColor.b, dur);
+                var a = easing.ease(time, _fromColor.a, _toColor.a - _fromColor.a, dur);
 
                 value = new Color(r, g, b, a);
                 break;
@@ -439,9 +439,9 @@ public class OTTween
     
     protected bool CallBack(string handler, object[] param)
     {
-        for (int t = 0; t < callBackTargets.Count; t++)
+        for (var t = 0; t < callBackTargets.Count; t++)
         {
-            MethodInfo mi = callBackTargets[t].GetType().GetMethod(handler);
+            var mi = callBackTargets[t].GetType().GetMethod(handler);
             if (mi != null)
             {
                 mi.Invoke(callBackTargets[t], param);
@@ -488,15 +488,15 @@ public class OTTween
         if (vars.Count == 0) return false;
         _running = true;
 		
-		float dur = duration;
+		var dur = duration;
 		if (pingPong) dur/=2;
 		
 		_restarted = false;
         time += deltaTime;
         if (time > dur) time = dur;
-        for (int v = 0; v < vars.Count; v++)
+        for (var v = 0; v < vars.Count; v++)
         {
-            OTEase easing = this.easing;
+            var easing = this.easing;
 			if (pingPong && !ping && pongEasings[v]!=null)
                 easing = pongEasings[v];
 			else			
@@ -510,9 +510,9 @@ public class OTTween
 			if (_pingPong)
 			{
 				time = 0;
-		        for (int v = 0; v < vars.Count; v++)
+		        for (var v = 0; v < vars.Count; v++)
 		        {
-					object t = toValues[v];
+					var t = toValues[v];
 					toValues[v] = fromValues[v];
 					fromValues[v] = t;
 		        }
@@ -559,9 +559,9 @@ public class OTTween
 				if (!pingPong)
 				{
 					// reset add tween start values to new values
-			        for (int v = 0; v < vars.Count; v++)
+			        for (var v = 0; v < vars.Count; v++)
 			        {
-						object t = addValues[v];
+						var t = addValues[v];
 						if (t!=null)
 						{
 							fromValues[v] = toValues[v];
@@ -588,9 +588,9 @@ public class OTTween
 		_playCount = _oldPlayCount;
 		_restarted = true;
 		// reset add tween start values to new values
-        for (int v = 0; v < vars.Count; v++)
+        for (var v = 0; v < vars.Count; v++)
         {
-			object t = addValues[v];
+			var t = addValues[v];
 			if (t!=null)
 			{
 				fromValues[v] = startValues[v];
@@ -627,7 +627,7 @@ public class OTTween
         SetVar(var);
         if (fromValue != null)
         {
-            object fv = fromValues[fromValues.Count - 1];
+            var fv = fromValues[fromValues.Count - 1];
             if (fv != null)
             {
                 if (fv is float && fromValue is int)
@@ -704,7 +704,7 @@ public class OTTween
 	
 	void AddValue(int idx, object addValue)
 	{
-        object fromValue = fromValues[idx];				
+        var fromValue = fromValues[idx];				
         if (fromValue is int)
         {
             try

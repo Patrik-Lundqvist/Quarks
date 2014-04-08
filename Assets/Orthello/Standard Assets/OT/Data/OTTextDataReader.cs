@@ -59,7 +59,7 @@ public class OTTextDataReader : OTDataReader {
 #else
 			if (File.Exists(source))
 			{
-				StreamReader streamReader = new StreamReader(source);
+				var streamReader = new StreamReader(source);
 				_text = streamReader.ReadToEnd();
 				streamReader.Close();
 				if (text!="" && !(this is OTXMLDataReader))

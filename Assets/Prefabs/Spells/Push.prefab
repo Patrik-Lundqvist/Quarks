@@ -143,10 +143,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d416f8549a780b44a84d819007064d15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSelfCast: 1
   status: 0
   caster: {fileID: 0}
   targets: []
-  powerCost: 1
+  powerCost: 0
   spellName: Push
   soundClip: Push
   txIcon: {fileID: 2800000, guid: 6b41930d96254f6419f155316f4decde, type: 3}

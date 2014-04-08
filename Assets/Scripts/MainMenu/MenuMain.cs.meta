@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 785d5449578021e4793df1cb51adbcd5
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - MainMenuSkin: {fileID: 11400000, guid: 9175df49ac0d12f4f8eaee3231188a9c, type: 2}
+  - LoadingTexture: {fileID: 2800000, guid: 4374b5f7024bf0f42a04edbe1c66d9e7, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
