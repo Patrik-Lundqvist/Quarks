@@ -195,7 +195,7 @@ public class GUIManager : MonoBehaviour {
 
                 if (GUI.Button(new Rect(0, 0, 140, 38), "Back", GameUISkin.GetStyle("UIBackButton")))
                 {
-                    Application.LoadLevel(0);
+                    Application.LoadLevel("mainMenu");
                 }
                     
                 GUILayout.EndArea();

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using HighscoreAPI;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using HighscoreAPI.Models;
 
 /// <summary>
 /// Handles game operations
@@ -155,7 +157,7 @@ public class GameManager : MonoBehaviour {
 		// Set the game info to the current game time
 		gameInfo = "Game Over";
 
-        HighscoreAPI.Instance.GetHighscores(1, GetHighscoreCallback);
+        HighscoreAPIManager.Instance.Client.GetHighscores(1, GetHighscoreCallback);
 		
 
 		// Get the bottom wall
@@ -179,20 +181,18 @@ public class GameManager : MonoBehaviour {
     /// <summary>
     /// Function called when highscore is retrived
     /// </summary>
-    /// <param name="success"></param>
-    /// <param name="highscoreList"></param>
-    void GetHighscoreCallback(bool success, List<Highscore> highscoreList)
+    void GetHighscoreCallback(Response<List<Score>> response)
     {
         // Check if the request was successful
-        if (success)
+        if (response.isSuccess)
         {
-            if (highscoreList.Count != 0)
+            if (response.DataObject.Count != 0)
             {
-                if (highscoreList.First().Score > finalScore)
+                if (response.DataObject.First().ScorePoints > finalScore)
                 {
                     highscoreResponse = true;
                     highscoreResponseError = false;
-                    highScore = "Highscore: " + highscoreList.First().Score.ToString();
+                    highScore = "Highscore: " + response.DataObject.First().ScorePoints.ToString();
                     return;
                 }
                 
@@ -204,7 +204,7 @@ public class GameManager : MonoBehaviour {
 
         // We got a response
         highscoreResponse = true;
-        highscoreResponseError = !success;
+        highscoreResponseError = !response.isSuccess;
 
     }
 
@@ -212,15 +212,30 @@ public class GameManager : MonoBehaviour {
     /// Function called when score is postec
     /// </summary>
     /// <param name="success"></param>
-    void PostHighscoreCallback(bool success)
+    void PostHighscoreCallback(Response<bool> response)
     {
-        if (success)
+        if (response.isSuccess)
         {
             gameInfo = "Score submitted!";
         }
         else
         {
-            gameInfo = "No connection";
+            HighscoreAPIManager.Instance.Client.GetVersion( verRespons =>
+            {
+                if (verRespons.isSuccess)
+                {
+                    if (verRespons.DataObject.UpdateRequired)
+                    {
+                        gameInfo = "Need update";
+                    }
+                }
+                else
+                {
+                    gameInfo = "No connection";
+                }
+
+            });
+            
         }
     }
 
@@ -349,7 +364,7 @@ public class GameManager : MonoBehaviour {
 	    }
 
         // Post the highscore to the api
-        HighscoreAPI.Instance.PostHighscore(new Highscore { Name = PlayerPrefs.GetString("playerName"), Score = finalScore }, PostHighscoreCallback);
+        HighscoreAPIManager.Instance.Client.PostScore(new Score() { Name = PlayerPrefs.GetString("playerName"), ScorePoints = finalScore }, PostHighscoreCallback);
         
         // Set the game info label
         gameInfo = "Submitting score ...";

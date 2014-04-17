@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using HighscoreAPI;
 using UnityEngine;
+using HighscoreAPI.Models;
 using Random = UnityEngine.Random;
 
 /// <summary>
@@ -18,6 +20,9 @@ public class MenuMain : MonoBehaviour
     public delegate void OnSinglePlayerClickEvent();
     public event OnSinglePlayerClickEvent OnSinglePlayerClick;
 
+    public delegate void OnAboutClickEvent();
+    public event OnAboutClickEvent OnAboutClick;
+
     private const int ButtonHeight = 80;
 
     private bool _requestLoad;
@@ -25,7 +30,7 @@ public class MenuMain : MonoBehaviour
     private bool _requestSuccess;
 
 
-    private List<Highscore> _highscoreList = new List<Highscore>();
+    private List<Score> _highscoreList = new List<Score>();
 
     /// <summary>
     ///     Start the instance.
@@ -33,7 +38,7 @@ public class MenuMain : MonoBehaviour
     private void Start()
     {
 
-        HighscoreAPI.Instance.GetHighscores(5, ResultsCallBack);      
+        HighscoreAPIManager.Instance.Client.GetHighscores(5, ResultsCallBack);      
         _requestLoad = true;
     }
 
@@ -58,8 +63,9 @@ public class MenuMain : MonoBehaviour
         }
 
         // Logic for the multiplayer button ( not implemented yet )
-        if (GUILayout.Button("Multiplayer", GUILayout.Width(560), GUILayout.Height(ButtonHeight)))
+        if (GUILayout.Button("About", GUILayout.Width(560), GUILayout.Height(ButtonHeight)))
         {
+            OnAboutClick();
         }
 
         // Logic for the exit button
@@ -96,7 +102,7 @@ public class MenuMain : MonoBehaviour
                 {
                     GUILayout.BeginHorizontal();
                         GUILayout.Label(highscore.Name, GUILayout.Width(180));
-                        GUILayout.Label(highscore.Score.ToString(CultureInfo.InvariantCulture), "lblScore", GUILayout.Width(100));
+                        GUILayout.Label(highscore.ScorePoints.ToString(CultureInfo.InvariantCulture), "lblScore", GUILayout.Width(100));
                     GUILayout.EndHorizontal();
                 }
             }
@@ -112,15 +118,11 @@ public class MenuMain : MonoBehaviour
 
     }
 
-    private void ResultsCallBack(bool success, List<Highscore> highscoreList)
+    private void ResultsCallBack(Response<List<Score>> response)
     {
-        _requestSuccess = success;
+        _requestSuccess = response.isSuccess;
         _requestLoad = false;
-        _highscoreList = highscoreList;
-    }
-
-    private void PostCallBack(bool posted)
-    {
+        _highscoreList = response.DataObject;
     }
 
 

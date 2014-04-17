@@ -20,6 +20,7 @@ public class MainMenuManager : MonoBehaviour {
 
         // Event listener
         mainMenu.OnSinglePlayerClick += OnSinglePlayerClick;
+        mainMenu.OnAboutClick += OnAboutClick;
 	}
 
     void OnSinglePlayerClick()
@@ -34,7 +35,8 @@ public class MainMenuManager : MonoBehaviour {
         menuPlayerSettings.OnStartClick += OnStartClick;
     }
 
-    private void OnStartClick(MenuPlayerSettings menuPlayerSettings)
+
+    void OnStartClick(MenuPlayerSettings menuPlayerSettings)
     {
         if (!String.IsNullOrEmpty(menuPlayerSettings.PlayerName))
         {
@@ -43,8 +45,37 @@ public class MainMenuManager : MonoBehaviour {
 
             PlayerPrefs.SetString("playerName", menuPlayerSettings.PlayerName);
 
-            Application.LoadLevel(1);
+            Application.LoadLevel(2);
         }
 
     }
+
+    void OnAboutClick()
+    {
+        Destroy(gameObject.GetComponent<MenuMain>());
+
+        var menuAbout = gameObject.AddComponent<MenuAbout>();
+
+        menuAbout.MainMenuSkin = MenuSkin;
+
+        // Event listener
+        menuAbout.OnBackClick += OnBackClick;
+    }
+
+    void OnBackClick()
+    {
+        Destroy(gameObject.GetComponent<MenuAbout>());
+
+        var mainMenu = gameObject.AddComponent<MenuMain>();
+
+        mainMenu.MainMenuSkin = MenuSkin;
+
+        mainMenu.LoadingTexture = LoadingTexture;
+
+        // Event listener
+        mainMenu.OnSinglePlayerClick += OnSinglePlayerClick;
+        mainMenu.OnAboutClick += OnAboutClick;
+
+    }
+
 }
