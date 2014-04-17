@@ -88,7 +88,11 @@ public class Push : Spell {
 			dir.Normalize();
 			
 			// Make the ball move in the oposite direction
-			other.gameObject.gameObject.transform.rigidbody.velocity = dir * other.gameObject.rigidbody.velocity.magnitude;
+		    if (!other.gameObject.rigidbody.isKinematic)
+		    {
+                other.gameObject.gameObject.transform.rigidbody.velocity = dir * other.gameObject.rigidbody.velocity.magnitude;
+		    }
+	
 		}
 		
 	}

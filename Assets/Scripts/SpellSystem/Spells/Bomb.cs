@@ -11,7 +11,7 @@ public class Bomb : Spell {
 	
 	float explodingRange;
 	float moveTime = 0.0f;
-	float explodeTime = 3f;
+	float explodeTime = 2.5f;
 
 	bool isExploding;
 
@@ -73,6 +73,7 @@ public class Bomb : Spell {
 
 		if(!isExploding)
 		{
+            explodeTime -= Time.deltaTime;
 			if ( explodeTime <= 0 )
 			{
 				isExploding = true;
@@ -81,10 +82,6 @@ public class Bomb : Spell {
 				sprite.additive = false;
 				new OTSound("BombExplode");
 				iTween.ShakePosition(Camera.main.gameObject, new Vector3(Random.Range(3.0F, 5.0F),Random.Range(3.0F, 5.0F),0), 0.5f);
-			}
-			else
-			{
-				explodeTime -= Time.deltaTime;
 			}
 		}
 		else

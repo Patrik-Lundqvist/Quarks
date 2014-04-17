@@ -16,6 +16,7 @@ public abstract class Ball : MonoBehaviour {
 	public Material ballMaterial;
 	public Material ballMaterialDeActived;
 	public Material ballMaterialInvulnerable;
+    public Material ballMaterialFrozen;
 
 	// Physical material of the ball
 	public PhysicMaterial ballPhysMaterial;
@@ -25,6 +26,10 @@ public abstract class Ball : MonoBehaviour {
 
 	// If our ball can die
 	public bool _isInvulnerable;
+
+    private bool _isFrozen;
+
+    private float _freezeTime;
 
 	/// <summary>
 	/// Gets or sets a value indicating whether this <see cref="Ball"/> is activated.
@@ -127,19 +132,25 @@ public abstract class Ball : MonoBehaviour {
 	/// <summary>
 	/// Stops the ball.
 	/// </summary>
-	public void StopBall()
+    public virtual void StopBall()
 	{
+        
 		// Save the velocity
 		savedVelocity = rigidbody.velocity;
 		// Save the direction
 		savedAngularVelocity = rigidbody.angularVelocity;
+
+        rigidbody.velocity = new Vector3(0,0,0);
+        rigidbody.angularVelocity = new Vector3(0, 0, 0);
+        this.gameObject.rigidbody.isKinematic = true;
 	}
 
 	/// <summary>
 	/// Starts the ball.
 	/// </summary>
-	public void StartBall()
+    public virtual void StartBall()
 	{
+        this.gameObject.rigidbody.isKinematic = false;
 		// Add the saved velocity
 		rigidbody.AddForce( savedVelocity, ForceMode.VelocityChange );
 		// Add the saved direction
@@ -167,7 +178,45 @@ public abstract class Ball : MonoBehaviour {
 		}
 
 	}
-	
+
+    public virtual void Freeze(float duration)
+    {
+        if (isActivated)
+        {
+            _freezeTime = duration;
+            if (!_isFrozen)
+            {
+                // Change the material
+                renderer.material = ballMaterialFrozen;
+                _isFrozen = true;
+                StopBall();
+                StartCoroutine(FreezeCoroutine());
+            }
+        }
+
+    }
+
+    private IEnumerator FreezeCoroutine()
+    {
+
+
+        while (_freezeTime > 0)
+        {
+            _freezeTime -= 0.5f;
+            if (_freezeTime <= 0)
+            {
+                // Change the material
+                renderer.material = ballMaterial;
+                _isFrozen = false;
+                StartBall();
+            }
+
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
+    }
+
 	/// <summary>
 	/// Update is called once per frame.
 	/// </summary>

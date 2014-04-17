@@ -22,20 +22,25 @@ public class DefaultObstacleBall : ObstacleBall {
 	}
 
 
-	public override void ActivateBall () {
+    public override void StartBall()
+    {
 
 		// Enable power reg
 		transform.FindChild("PowerReg").collider.enabled = true;
-		
-		base.ActivateBall();
+
+        base.StartBall();
 	}
 
-	
-	public override void DisableBall () {
+
+    public override void StopBall()
+    {
+
+        var powerReg = transform.FindChild("PowerReg");
 
 		// Disable power reg
-		transform.FindChild("PowerReg").collider.enabled = false;
+        powerReg.collider.enabled = false;
+        powerReg.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
-		base.DisableBall();
+        base.StopBall();
 	}
 }

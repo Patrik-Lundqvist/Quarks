@@ -118,6 +118,7 @@ MonoBehaviour:
   ballMaterialDeActived: {fileID: 2100000, guid: 84b9e1d19d11078d11005b9844295342,
     type: 2}
   ballMaterialInvulnerable: {fileID: 0}
+  ballMaterialFrozen: {fileID: 2100000, guid: 7bd4c0eb5ed75714394e3815709c7da3, type: 2}
   ballPhysMaterial: {fileID: 13400000, guid: 02b4714af920253468f837dbf29c210e, type: 2}
   _isInvulnerable: 0
   speed: 15000
