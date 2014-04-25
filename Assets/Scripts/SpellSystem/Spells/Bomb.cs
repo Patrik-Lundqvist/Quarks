@@ -81,7 +81,8 @@ public class Bomb : Spell {
 				sprite.image = bombExplosion;
 				sprite.additive = false;
 				new OTSound("BombExplode");
-				iTween.ShakePosition(Camera.main.gameObject, new Vector3(Random.Range(3.0F, 5.0F),Random.Range(3.0F, 5.0F),0), 0.5f);
+                iTween.ShakePosition(Camera.main.gameObject, new Vector3(Random.Range(3.0F, 5.0F), Random.Range(3.0F, 5.0F), 0), 0.5f);
+
 			}
 		}
 		else
@@ -143,4 +144,6 @@ public class Bomb : Spell {
 			yield return new WaitForSeconds(0.5f);
 		}
 	}
+
+
 }

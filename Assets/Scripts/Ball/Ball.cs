@@ -18,6 +18,8 @@ public abstract class Ball : MonoBehaviour {
 	public Material ballMaterialInvulnerable;
     public Material ballMaterialFrozen;
 
+    public GameObject VaporPrefab;
+
 	// Physical material of the ball
 	public PhysicMaterial ballPhysMaterial;
 
@@ -194,6 +196,17 @@ public abstract class Ball : MonoBehaviour {
             }
         }
 
+    }
+
+    public void Vaporize()
+    {
+        if (isActivated)
+        {
+            var vapor = Instantiate(VaporPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
+            Destroy(vapor,1.5f);
+            Destroy(this.gameObject);
+        }
+        
     }
 
     private IEnumerator FreezeCoroutine()

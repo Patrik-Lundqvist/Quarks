@@ -496,7 +496,17 @@ public class OTObject : MonoBehaviour
 	///  this OTObject is overlapping another 'collidable' OTObject. 
 	/// </remarks>
 	public ObjectDelegate onStay = null;
-	
+
+    /// <summary>
+    /// Delegate to check collisions
+    /// </summary>
+    /// <remarks>
+    ///  The onCollision delegate will be called if this object 'collidable' setting is set to true and if the 
+    ///  this OTObject collides with another 'collidable' OTObject. 
+    /// </remarks>
+
+    public delegate void EventHandler(Collider c);
+    public event EventHandler onTrigger;
 	/// <summary>
 	/// True if someone clicked this sprite
 	/// </summary>
@@ -2457,6 +2467,14 @@ public class OTObject : MonoBehaviour
 				onEnter(this);
 			if (!CallBack("onEnter", callBackParams))
 				CallBack("OnEnter", callBackParams);
+		}
+		else
+		{
+            if(onTrigger != null)
+		    {
+		        onTrigger(c);
+		    }
+		    
 		}
 	}
 	

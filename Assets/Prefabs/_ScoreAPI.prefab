@@ -38,10 +38,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764fb02a3682190478115c406a84e74f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ApiURL: highscore.webdev.local
-  PrivateKey: 0a2ce211e5fa3a58ca22f2f031207c1c
-  PublicKey: 4cadea8645aded892e74d2f60048323e
-  GameVersion: 1.0
+  ApiURL: 
+  PrivateKey: 
+  PublicKey: 
+  GameVersion: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

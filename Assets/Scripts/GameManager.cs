@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour {
 		if(isRunning){
 			if(gameTimer.CurrentTime > nextSpawnTime)
 			{
-				SpawnObstacleBall();
+				SpawnObstacleBalls(1);
 				nextSpawnTime += 10;
 			}
 
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour {
 	void StartGame()
 	{
 		// Spawn the first obstacle ball
-		SpawnObstacleBall();
+		SpawnObstacleBalls(5);
 
 		// Start the game timer
 		gameTimer.StartTimer();
@@ -248,18 +248,21 @@ public class GameManager : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Spawn an obstacle ball.
+	/// Spawn obstacle balls.
 	/// </summary>
-	void SpawnObstacleBall()
-	{
-		// Instatiate an obstacle ball
-		var obstacleBall = gameObject.GetComponent<NetworkManager>().SpawnObstacleBall() as GameObject;
+	private void SpawnObstacleBalls(int numberOfBalls)
+    {
+        for (var i = 0; i < numberOfBalls; i++)
+        {
+            // Instatiate an obstacle ball
+            var obstacleBall = gameObject.GetComponent<NetworkManager>().SpawnObstacleBall() as GameObject;
 
-		obstacleBall.GetComponent<ObstacleBall>().isLive = true;
+            obstacleBall.GetComponent<ObstacleBall>().isLive = true;
 
-		// Add to obstacle ball list
-		AddObstacleBall(obstacleBall);
-	}
+            // Add to obstacle ball list
+            AddObstacleBall(obstacleBall);
+        }
+    }
 
 	/// <summary>
 	/// Awake this instance.
